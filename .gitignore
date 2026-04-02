@@ -30,11 +30,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files
+.env
+.env.local
+.env.production
 
 # vercel
 .vercel
+vercel.json
 
 # typescript
 *.tsbuildinfo
@@ -43,9 +46,17 @@ local-*
 .claude
 .z-ai-config
 dev.log
+server.log
 test
 prompt
 
+# Download directory (generated outputs)
+/download/
+
 server.log
+
 # Skills directory
 /skills/
+
+# Worklog (internal)
+worklog.md

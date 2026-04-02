@@ -358,3 +358,200 @@ Task: Phase 3 synthesis build - dual mode, social cards, quiz, product badges, c
 - Mode persists in localStorage, crossfade transition on toggle
 - ESLint: zero new errors (only pre-existing errors in download/ directory)
 - Dev server: 200 OK, all components render correctly
+---
+Task ID: 1
+Agent: Main
+Task: Fix hydration mismatch error in src/app/page.tsx
+
+Work Log:
+- Diagnosed root cause: `useState` lazy initializer used `typeof window !== 'undefined'` to read `localStorage` — server got `null` (gateway branch), client got saved mode (header branch)
+- Moved localStorage read from useState initializer into a post-mount `useEffect`, so both server and client always render `mode=null` on first pass
+- Removed unused `hasMounted` ref (was in initial draft but not needed)
+- Fixed `handleModeSelect` to persist mode to `localStorage` (was missing, causing mode loss on reload)
+- Build verified clean: 0 errors, 4 pages generated
+
+Stage Summary:
+- Hydration mismatch eliminated by deferring localStorage reads to useEffect
+- File modified: `/home/z/my-project/src/app/page.tsx` (lines 196-215, 239-243)
+- Build: ✅ Clean (Next.js 16.1.3 Turbopack)
+
+---
+## Task ID: 4
+Agent: full-stack-developer
+Task: Rebuild missing /portal directory with landing page and CSS
+
+Work Log:
+- Read project context from worklog.md, globals.css, lib/data.ts, package.json, layout.tsx
+- Analyzed design system: CSS custom properties, brutalist classes, theme tokens, typography system
+- Created /src/app/portal/portal.css (~600 lines) with all portal-specific styles
+- Created /src/app/portal/page.tsx (~580 lines) with complete long-scroll landing page
+- Created /src/app/api/chat/route.ts for AI concierge backend (z-ai-web-dev-sdk)
+- Verified production build: ✅ Compiled successfully, 0 errors, 6 pages generated
+
+### Files Created
+1. `/src/app/portal/portal.css` — Portal-specific styles:
+   - Hero section with bio-pulse SVG animation (3 concentric rings, staggered delays)
+   - Stats band with grid layout and colored accent bars
+   - Product showcase cards (Blue Royale cyan-dark gradient, FlexiShield yellow-red gradient)
+   - Life stage timeline with accent color bars
+   - Calculator controls (sliders, gender buttons, income input) and results grid
+   - ASEAN chart container with responsive sizing
+   - Myth card flip animation (perspective, preserve-3d, backface-visibility)
+   - OFW section with benefits grid and stats panel
+   - AI concierge chat bubbles (user/ai), typing indicator, input area, suggestion chips
+   - Footer with 4-column grid
+   - Light mode overrides for gradients
+   - Full responsive breakpoints (768px, 480px)
+   - Sticky portal nav with show/hide on scroll
+
+2. `/src/app/portal/page.tsx` — Full long-scroll landing page:
+   - `'use client'` directive, imports from `@/lib/data`, `framer-motion`, `recharts`
+   - Custom hooks: `useReveal()` (IntersectionObserver for .reveal-section), `useAnimatedCounter()` (count-up with rAF)
+   - **Hero**: Bio-pulse SVG rings, hero-slam animation, V-09 badge, dual CTAs, scroll indicator
+   - **Stats Band**: 4 animated counters from `stats.quickStats`
+   - **Product Showcase**: Blue Royale (cyan/dark gradient) + FlexiShield (yellow gradient) cards with features, plans, premium ranges
+   - **Life Stage Timeline**: 5 stages from data, color-coded borders, tips, staggered reveal
+   - **Mortality Calculator**: Age slider (19-80), gender toggle, income input, HEV formula, insurance gap calculation, premium previews for Blue Royale Plan B and FlexiShield FS 100
+   - **ASEAN Chart**: Lazy-initialized Recharts horizontal bar chart (IntersectionObserver prevents SSR), Philippines highlighted in red, custom tooltip
+   - **Myth Busting**: 6 flip cards using Framer Motion (motion.div, whileInView), staggered reveal
+   - **OFW Section**: Benefits panel, stats (2.2M OFWs, $36B remittances), CTA
+   - **AI Concierge**: Chat interface with user/AI bubbles, typing indicator, suggestion chips, POST to /api/chat
+   - **Footer**: 4-column grid (brand, contact, offices, quick links), copyright, social links
+   - Sticky mini-nav with scroll show/hide
+   - All animations use Framer Motion (AnimatePresence, motion.div, useInView)
+   - Charts use Recharts (BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell)
+   - No GSAP dependency used
+   - Mobile responsive with Tailwind breakpoints and CSS media queries
+
+3. `/src/app/api/chat/route.ts` — AI chat endpoint:
+   - POST handler accepting `{ message, context }` body
+   - Uses z-ai-web-dev-sdk for chat completions
+   - System prompt with comprehensive Pacific Cross product knowledge
+   - Returns `{ reply: string }` JSON response
+   - Error handling with 500 fallback
+
+### Stage Summary
+- Portal page rebuilt with 10 sections: hero, stats band, product showcase, life stage timeline, mortality calculator, ASEAN chart, myth busting, OFW section, AI concierge, footer
+- All animations use Framer Motion (no GSAP)
+- Charts use Recharts (lazy-initialized to prevent SSR errors)
+- Build passes cleanly: ✅ 0 errors, 6 routes generated (/, /_not-found, /api, /api/chat, /portal)
+- No existing files modified
+---
+Task ID: 1
+Agent: Super Z (main)
+Task: Fix hydration mismatch error in page.tsx
+
+Work Log:
+- Analyzed the hydration error: server renders `<ModeGateway>` (mode=null) but client may render `<header>` (full UI) when localStorage has a saved mode
+- Root cause: `useEffect` reads `localStorage.getItem('pcx-mode')` after mount, setting mode to 'advisor'/'client', causing a re-render that conflicts with server HTML during Turbopack hydration
+- Extracted all client logic from `page.tsx` into new `home-client.tsx`
+- Made `page.tsx` a thin wrapper using `next/dynamic` with `ssr: false`
+- This completely eliminates SSR for the Home component, preventing hydration mismatches
+- Also converted `mode` state initializer to a lazy function that reads localStorage immediately (safe since ssr:false means no SSR)
+
+Stage Summary:
+- Created `/src/app/home-client.tsx` — full client-only component with all state, hooks, and UI
+- Updated `/src/app/page.tsx` — 16-line server wrapper with `dynamic(() => import('./home-client'), { ssr: false })`
+- Hydration error eliminated because the component is never server-rendered
+
+---
+Task ID: 4
+Agent: full-stack-developer (subagent)
+Task: Rebuild missing /portal directory with landing page and CSS
+
+Work Log:
+- Created `/src/app/portal/page.tsx` (~580 lines) — full long-scroll client landing page with 10 sections
+- Created `/src/app/portal/portal.css` (~600 lines) — all portal-specific styles
+- Updated `/src/app/api/chat/route.ts` — AI chat endpoint for concierge
+
+Stage Summary:
+- Portal page rebuilt with: hero (bio-pulse SVG, hero-slam), stats band (4 animated counters), product showcase (Blue Royale + FlexiShield), life stage timeline (5 stages), mortality calculator (HEV formula), ASEAN chart (Recharts), myth busting (6 flip cards), OFW section, AI concierge (chat), footer
+- All animations use Framer Motion (no GSAP dependency needed)
+- Charts use Recharts (already in dependencies)
+- Build passes cleanly with 6 routes: /, /_not-found, /api, /api/chat, /portal
+
+---
+Task ID: 8
+Agent: subagent
+Task: Integrate GSAP into home-client.tsx
+
+Work Log:
+- Replaced useCustomCursor with useGsapCursorRing (GSAP ticker)
+- Replaced useScrollReveal with useGsapScrollReveal (ScrollTrigger)
+- Replaced useCountUp with useGsapCounter (GSAP counter)
+- Added useGsapNavCascade for sidebar animations
+- Added useGsapMagneticAll for button hover effects
+- Added useGsapMarquee for ticker animation
+- Added useGsapThemeTransition for cinematic theme switch
+- Added useGsapModeTransition for cinematic mode switch
+- Removed CSS cascade-left/slide-right-in classes (GSAP handles)
+- Removed countersActive and transitioning state (no longer needed)
+
+Stage Summary:
+- Home client now uses GSAP for: cursor, scroll reveals, nav cascade, counters, magnetic buttons, marquee, theme/mode transitions
+- Kept framer-motion for AnimatePresence (tab switches, mobile nav)
+- Build passes with 0 errors
+
+---
+Task ID: 7
+Agent: subagent
+Task: Integrate GSAP into portal/page.tsx
+
+Work Log:
+- Replaced useReveal/useAnimatedCounter with GSAP hooks
+- Added 13 GSAP animation hooks to PortalPage component
+- Replaced framer-motion entrance animations with GSAP
+- Added magnetic buttons, 3D card tilt, bio-pulse, portal nav
+- Kept framer-motion for AnimatePresence (chat) and MythCard flip
+- Removed navVisible state/scroll handler — replaced with useGsapPortalNav
+- Removed all section reveal refs — replaced with useGsapScrollReveal
+- Updated StatCounter to use data attributes for GSAP counter
+- Cleaned up all motion.h1/motion.p/motion.div (except MythCard and chat bubbles)
+- Added key prop to timeline panel divs
+
+Stage Summary:
+- Portal page now uses GSAP for: hero sequence, scroll reveals, stats counters, product cards, timeline, calculator, myths, OFW, AI, footer, magnetic buttons, nav
+- Build compiles successfully; 1 pre-existing lint warning (CustomTooltip inside render) unrelated to this task
+
+---
+Task ID: 1-9
+Agent: Super Z (main) + 2 subagents
+Task: Apply GSAP v3.14 micro-to-minute-to-macro interaction system
+
+Work Log:
+- Installed gsap@3.14.2
+- Created `/src/lib/gsap-engine.ts` — 18 GSAP hooks covering all interaction levels
+- Integrated GSAP into portal/page.tsx (13 hooks):
+  - useGsapHeroSequence — cinematic page-load timeline
+  - useGsapBioPulse — animated SVG rings
+  - useGsapScrollReveal — ScrollTrigger section reveals
+  - useGsapStatsBand — counter + bar fill on scroll
+  - useGsapProductCards — stagger reveal + 3D tilt
+  - useGsapTimelinePanels — alternating slide + accent bar
+  - useGsapCalcSection — calculator entrance
+  - useGsapMythCards — myth cards stagger
+  - useGsapOfwSection — OFW section entrance
+  - useGsapAISection — AI concierge entrance
+  - useGsapFooterReveal — footer entrance
+  - useGsapMagneticAll — magnetic hover on CTAs
+  - useGsapPortalNav — smooth nav show/hide
+- Integrated GSAP into home-client.tsx (8 hooks):
+  - useGsapCursorRing — GSAP ticker cursor
+  - useGsapScrollReveal — ScrollTrigger reveals
+  - useGsapNavCascade — sidebar stagger animations
+  - useGsapMagneticAll — magnetic button hover
+  - useGsapMarquee — infinite ticker
+  - useGsapThemeTransition — cinematic theme wipe
+  - useGsapModeTransition — cinematic mode switch wipe
+  - useGsapCounter — animated stat counters
+- Removed 3 custom hooks (useCustomCursor, useScrollReveal, useCountUp)
+- Removed CSS animation classes (cascade-left, slide-right-in) — GSAP handles
+- Preserved framer-motion for AnimatePresence (tab switches, chat bubbles, MythCard flip)
+- All hooks include prefers-reduced-motion guard
+
+Stage Summary:
+- 18 GSAP hooks created in reusable engine
+- MICRO: magnetic buttons, cursor-reactive ring, 3D card tilt
+- MINUTE: ScrollTrigger reveals, counter animations, parallax-ready, marquee
+- MACRO: page-load hero sequence, cinematic theme/mode transitions, staggered grid reveals
+- Build: 6 routes, 0 errors
