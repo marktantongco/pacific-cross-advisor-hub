@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the complete extracted text from the insurance brochure, including all visible details:\n\n---\n\n**Top Left Panel:**\nIs insurance only\nfor old people?\nNope.\nIt's WEALTH ARMOR.\nFLEXISHIELD\nHospitalization\nShield.\nBLUE ROYALE\nLifetime\nCoverage\nFind your vibe at\nINSURANCEHUB\n\n**Top Right Panel:**\nFlexiShield protects you\nfrom...\nHOSPITAL BILLS\nVS\nNOT HEARTBREAK\nPROTECT WHAT\nMATTERS,\n\n**Middle Left Panel:**\nCHOOSE YOUR ARMOR\nFLEXISHIELD\nHospital Hero\nFlexible Entry\nBLUE ROYALE\nLegacy Boss\nLifetime Coverage\nINSURANCE PROTECTS YOUR WALLET,\nNOT YOUR LOVE LIFE!\n\n**Middle Right Panel:**\nBE AN EDUCATOR,\nNOT A SELLER!\nUse Analogies: Wifi, Armor, Heirloom\nHumor & Empathy > Hard Sell\nShare Stories, Not Stats\nLEVEL UP AT INSURANCEHUB\n\n**Bottom Left Panel:**\nINSURANCE IN THE PHILIPPINES\nLESS THAN 2% COVERED!\nMOST FILIPINOS INSURE THEIR PHONES\nBEFORE THEIR LIVES!\n\n**Bottom Right Panel:**\nIMAGINE A PHILIPPINES\nWHERE MEDICAL DEBT IS AS\nRARE AS DIAL-UP INTERTE?\nLET'S MAKE IT HAPPEN\n\n---\n\n**Note:** The brochure contains promotional content with product names (FlexiShield, Blue Royale), taglines, and marketing messages but lacks specific numerical data (premiums, coverage amounts, deductibles, etc.) or detailed policy terms. The only numerical data present is \"LESS THAN 2% COVERED!\" in the Philippines statistics panel.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1774903129,
+  "id": "20260331043828bcb3b5188cec400c",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260331043828bcb3b5188cec400c",
+  "usage": {
+    "completion_tokens": 361,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2126,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2487
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #F4F1E9; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  background: #F4F1E9;
+}
+.top-bar { width: 720pt; height: 5pt; background: #15857A; }
+.content { margin: 28pt 50pt 20pt 50pt; display: flex; flex-direction: column; }
+.accent-line { width: 50pt; height: 4pt; background: #FF6A3B; border-radius: 2pt; margin-bottom: 8pt; }
+.chart-area {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  margin-top: 8pt;
+}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="content">
+  <div class="accent-line"></div>
+  <h1 style="color: #15857A; font-size: 24pt; font-family: Impact, sans-serif; margin: 0 0 4pt 0;">HOW DOES THE PH STACK UP?</h1>
+  <p style="color: #888; font-size: 9pt; margin: 0;">ASEAN INSURANCE PENETRATION RATES (%)</p>
+  <div class="chart-area">
+    <div id="asean-chart" class="placeholder" style="width: 600pt; height: 280pt;"></div>
+  </div>
+</div>
+</body>
+</html>
