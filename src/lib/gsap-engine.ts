@@ -126,9 +126,13 @@ export function useGsapCounter(
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => {
+      // Kill only ScrollTriggers attached to this specific element
+      const triggers = ScrollTrigger.getAll();
+      triggers.forEach((t) => {
         if (t.trigger === el) t.kill();
       });
+      // Also kill any tweens targeting the proxy object
+      gsap.killTweensOf(obj);
     };
   }, [ref, target, options.duration, options.prefix, options.suffix, options.decimals, options.ease, options.scrollTrigger]);
 }

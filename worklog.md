@@ -555,3 +555,69 @@ Stage Summary:
 - MINUTE: ScrollTrigger reveals, counter animations, parallax-ready, marquee
 - MACRO: page-load hero sequence, cinematic theme/mode transitions, staggered grid reveals
 - Build: 6 routes, 0 errors
+
+---
+Task ID: Deploy
+Agent: Super Z (main)
+Task: Deploy to GitHub (README + Actions) and Vercel
+
+Work Log:
+- Created comprehensive README.md with: overview, tech stack, features, architecture diagram, project structure, design system docs, GSAP animation reference table, product data tables, deployment instructions, contributing guidelines
+- Created .github/workflows/deploy-pages.yml — GitHub Actions workflow for auto-deploy on push to main
+- Created vercel.json — Vercel project config with HK region, security headers
+- Updated next.config.ts — dynamic output (standalone for Vercel, export for GitHub Pages via env var)
+- Updated .gitignore — added vercel.json, worklog.md, /download/, server.log
+- Created deploy.sh — one-command deploy script (gh create repo + push + vercel deploy)
+- Initialized git commit with all changes (14 files, 4556 insertions)
+
+Stage Summary:
+- GitHub: Requires `gh auth login` then `bash deploy.sh` or manual push
+- Vercel: Requires `vercel login` then `vercel --prod`
+- GitHub Pages: Auto-deploys via Actions once repo exists
+- Note: GitHub Pages static export disables /api/chat (Vercel required for full functionality)
+
+---
+Task ID: 7
+Agent: general-purpose
+Task: Create comprehensive README.md
+
+Work Log:
+- Read existing README.md (332 lines) and worklog.md for full project context
+- Explored project structure: 60+ component files, 40+ shadcn/ui components, 8 section components
+- Read key source files for accurate data:
+  - package.json (dependencies and versions)
+  - src/lib/gsap-engine.ts (all 18 GSAP hooks with full descriptions)
+  - src/lib/data.ts (product pricing, life stages, FAQ, spiel flow, social media content)
+  - src/app/globals.css (~1,500 lines design system with dark/light theme tokens)
+  - src/app/layout.tsx (5 Google Fonts, PWA meta, noise/vignette overlays)
+  - src/app/api/chat/route.ts (z-ai-web-dev-sdk endpoint)
+  - src/app/home-client.tsx (dual-mode architecture details)
+  - public/manifest.json (PWA configuration)
+  - next.config.ts (dynamic output configuration)
+  - vercel.json (deployment config with security headers)
+  - .github/workflows/deploy-pages.yml (CI/CD pipeline)
+- Wrote comprehensive README.md (677 lines) with all 14 required sections:
+  1. ASCII art hero banner with project name
+  2. Overview (3 paragraphs covering project purpose, dual-mode, product integration)
+  3. Tech Stack table (17 technologies with versions and purposes)
+  4. Architecture (system diagram, routing table, data flow, directory tree)
+  5. Design System (dark/light color tokens, typography scale, spacing, component library)
+  6. GSAP Animation Engine (all 18 hooks categorized into micro/minute/macro)
+  7. Features (detailed list with 8 major feature groups)
+  8. Dual Mode System (Advisor vs Client comparison table, transition effects)
+  9. Product Data (Blue Royale 3-plan comparison, FlexiShield 4-tier pricing grid)
+  10. API Routes (/api/chat full documentation with request/response examples)
+  11. Getting Started (prerequisites, installation, scripts, environment variables)
+  12. Deployment (Vercel, GitHub Pages, Docker instructions with env var requirements)
+  13. Contributing (guidelines with design system rules)
+  14. License (MIT full text)
+- Added badge shields (Next.js, React, GSAP, TypeScript, Tailwind, Framer Motion, License)
+- Added table of contents with anchor links
+- No emojis in section headers (requirement met)
+- All data verified against source files (pricing, hooks, versions, etc.)
+
+Stage Summary:
+- README.md rewritten from 332 lines to 677 lines of comprehensive documentation
+- All 14 required sections present with accurate data sourced from codebase
+- Badge shields, ASCII art banner, code blocks, tables, and proper markdown formatting
+- Work appended to worklog.md

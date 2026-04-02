@@ -37,7 +37,6 @@ yarn-error.log*
 
 # vercel
 .vercel
-vercel.json
 
 # typescript
 *.tsbuildinfo
@@ -58,5 +57,5 @@ server.log
 # Skills directory
 /skills/
 
-# Worklog (internal)
-worklog.md
+# Worklog (internal - tracked for repo transparency)
+# worklog.md
