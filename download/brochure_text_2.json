@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the complete text and data extracted from the document, organized by section with all visible details:\n\n\n### **Header & Tagline**  \n- **Title**: INSURANCEHUB  \n- **Tagline**: NO BARRIERS. NO BORING STUFF.  \n\n\n### **Homepage Section**  \n#### **Advisor Mode (Left Mobile Screen)**  \n- **Section Header**: ADVISOR MODE  \n- **Primary Button**:  \n  - Text: LEVEL UP YOUR SKILLS  \n  - Icon: Play arrow (▶)  \n- **Subsections**:  \n  - **FAQs**:  \n    - Button: FAQs  \n  - **Roadmap**:  \n    - Button: ROADMAP  \n  - **Presentation Deck**:  \n    - Button: PRESENTATION DECK  \n  - **FAQ Training**:  \n    - Header: FAQ TRAINING  \n    - Buttons:  \n      - COMMON QUESTIONS  \n      - SPIEL FLOW  \n  - **Objection Quiz**:  \n    - Header: OBJECTION QUIZ  \n    - Button: TAKE THE QUIZ!  \n    - Challenge Text: \"What if already have insurance?\"  \n  - **Resources**:  \n    - Header: RESOURCES  \n    - Buttons:  \n      - DOWNLOAD DECK (with play icon)  \n      - CALENDAR (with calendar icon)  \n      - SALES TIPS (with briefcase icon)  \n\n\n#### **Client Mode (Right Mobile Screen)**  \n- **Section Header**: CLIENT MODE  \n- **Primary Button**:  \n  - Text: WHICH PLAN SUITS YOU?  \n  - Subtext: Take the Quiz!  \n  - Icon: Play arrow (▶)  \n- **Subsections**:  \n  - **Plan Comparison**:  \n    - Header: PLAN COMPARISON  \n    - Visual: \"FLEXISHIELD vs BLUE ROYALE\" (with \"vs\" icon and briefcase icon)  \n  - **Guides**:  \n    - Header: GUIDES  \n    - Buttons:  \n      - BROCHURES (with document icon)  \n      - CHAT WITH ADVISOR (with chat bubble icon)  \n\n\n### **Market Insights Section (Bottom Left)**  \n- **Header**: Market Insights  \n- **Subheader**: INSURANCE IN THE PHILIPPINES  \n- **Key Statistic**: LESS THAN 2% COVERED!  \n- **Visuals**:  \n  - Icons: Airplane, sad face, map of the Philippines, OFW (Overseas Filipino Worker) family, tools (wrench), plus sign, star, play arrow  \n- **Label**: OFW PROTECTION  \n\n\n### **Quiz Screen Section (Bottom Right)**  \n- **Header**: Quiz Screen  \n- **Question**: WHICH INSURANCE FITS YOUR VIBE?  \n- **Subquestion**: WHAT'S YOUR LIFESTYLE?  \n- **Lifestyle Options (Buttons)**:  \n  - Adventurous Traveler (heart icon, orange background)  \n  - Busy Professional (briefcase icon, blue background)  \n  - Family Focused (house icon, yellow background)  \n- **Action Button**: NEXT (yellow background)  \n\n\n### **Notes on Missing Details**  \nThe document does not include:  \n- Specific product names (beyond \"FLEXISHIELD\" and \"BLUE ROYALE\" in the plan comparison).  \n- Plan options, pricing/premium amounts, coverage limits, benefits, exclusions, tables with numbers, age ranges, eligibility, terms, conditions, or fine print.  \n\nAll visible text, buttons, headers, and visual labels are included above.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1774903125,
+  "id": "20260331043813a5cfc6efb5c34c15",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260331043813a5cfc6efb5c34c15",
+  "usage": {
+    "completion_tokens": 738,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2104,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2842
+  }
+}

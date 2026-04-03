@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #1A1A1A; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  background: #1A1A1A;
+}
+.top-bar { width: 720pt; height: 6pt; background: #FFD700; }
+.content { margin: 20pt 36pt 16pt 36pt; display: flex; flex-direction: column; flex: 1; }
+.subtitle-bar { background: #00BFFF; border-radius: 4pt; padding: 3pt 12pt; display: inline-block; margin-bottom: 6pt; }
+.plans { display: flex; gap: 10pt; margin-top: 10pt; flex: 1; }
+.plan-card {
+  flex: 1; background: #FFFFFF; border-radius: 10pt; padding: 14pt 12pt;
+  border: 3pt solid #00BFFF; display: flex; flex-direction: column;
+}
+.plan-card.premium { border-color: #FFD700; background: #FFFDE7; }
+.plan-card.popular { border-color: #FF5722; position: relative; }
+.badge { background: #FF5722; border-radius: 4pt; padding: 2pt 8pt; margin-bottom: 6pt; display: inline-block; }
+.callout-bar { background: #4CAF50; border-radius: 6pt; padding: 8pt 16pt; margin-top: 10pt; text-align: center; }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="content">
+  <div class="subtitle-bar">
+    <p style="color: #FFFFFF; font-size: 8pt; margin: 0; font-weight: bold;">BLUE ROYALE</p>
+  </div>
+  <h1 style="color: #FFD700; font-size: 22pt; margin: 0 0 2pt 0; font-weight: bold;">3 PLANS, 1 MISSION</h1>
+  <p style="color: #AAAAAA; font-size: 9pt; margin: 0;">Worldwide medical coverage for every stage of life</p>
+
+  <div class="plans">
+    <div class="plan-card">
+      <p style="color: #00BFFF; font-size: 18pt; margin: 0; font-weight: bold;">PLAN A</p>
+      <p style="color: #1A1A1A; font-size: 11pt; margin: 4pt 0 0 0; font-weight: bold;">USD 500K Coverage</p>
+      <p style="color: #FF5722; font-size: 16pt; margin: 8pt 0 0 0; font-weight: bold;">$1,676/yr</p>
+      <p style="color: #888888; font-size: 8pt; margin: 2pt 0 0 0;">Age 19-25 starting rate</p>
+      <p style="color: #666666; font-size: 8pt; margin: 6pt 0 0 0;">Essential worldwide protection</p>
+    </div>
+    <div class="plan-card popular">
+      <div class="badge">
+        <p style="color: #FFFFFF; font-size: 7pt; margin: 0; font-weight: bold;">MOST POPULAR</p>
+      </div>
+      <p style="color: #FF5722; font-size: 18pt; margin: 0; font-weight: bold;">PLAN B</p>
+      <p style="color: #1A1A1A; font-size: 11pt; margin: 4pt 0 0 0; font-weight: bold;">USD 1M Coverage</p>
+      <p style="color: #FF5722; font-size: 16pt; margin: 8pt 0 0 0; font-weight: bold;">$2,698/yr</p>
+      <p style="color: #888888; font-size: 8pt; margin: 2pt 0 0 0;">Age 19-25 starting rate</p>
+      <p style="color: #4CAF50; font-size: 8pt; margin: 6pt 0 0 0; font-weight: bold;">Includes Dental + Vision</p>
+    </div>
+    <div class="plan-card premium">
+      <p style="color: #FFD700; font-size: 18pt; margin: 0; font-weight: bold;">PLAN C</p>
+      <p style="color: #1A1A1A; font-size: 11pt; margin: 4pt 0 0 0; font-weight: bold;">USD 2M Coverage</p>
+      <p style="color: #FF5722; font-size: 16pt; margin: 8pt 0 0 0; font-weight: bold;">$3,346/yr</p>
+      <p style="color: #888888; font-size: 8pt; margin: 2pt 0 0 0;">Age 19-25 starting rate</p>
+      <p style="color: #FFD700; font-size: 8pt; margin: 6pt 0 0 0; font-weight: bold;">PREMIUM - All benefits included</p>
+    </div>
+  </div>
+
+  <div class="callout-bar">
+    <p style="color: #FFFFFF; font-size: 10pt; margin: 0; font-weight: bold;">As low as $1.52/day for Plan A at age 19-25</p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #1A1A1A; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  background: #1A1A1A;
+}
+.top-bar { width: 720pt; height: 6pt; background: #FFD700; }
+.content { margin: 20pt 36pt 16pt 36pt; display: flex; flex-direction: column; flex: 1; }
+.subtitle-bar { background: #00BFFF; border-radius: 4pt; padding: 3pt 12pt; display: inline-block; margin-bottom: 6pt; }
+.chart-area { flex: 1; display: flex; align-items: center; justify-content: center; margin-top: 8pt; }
+.plan-badge { background: #FF5722; border-radius: 4pt; padding: 2pt 8pt; display: inline-block; margin-top: 4pt; }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="content">
+  <div class="subtitle-bar">
+    <p style="color: #FFFFFF; font-size: 8pt; margin: 0; font-weight: bold;">BLUE ROYALE</p>
+  </div>
+  <h1 style="color: #FFD700; font-size: 22pt; margin: 0 0 2pt 0; font-weight: bold;">ANNUAL PREMIUMS (USD)</h1>
+  <p style="color: #AAAAAA; font-size: 9pt; margin: 0;">Plan B (USD 1M Coverage) by Age Group</p>
+  <div class="plan-badge">
+    <p style="color: #FFFFFF; font-size: 7pt; margin: 0; font-weight: bold;">PLAN B SHOWN - MOST POPULAR</p>
+  </div>
+  <div class="chart-area">
+    <div id="br-pricing-chart" class="placeholder" style="width: 620pt; height: 270pt;"></div>
+  </div>
+</div>
+</body>
+</html>

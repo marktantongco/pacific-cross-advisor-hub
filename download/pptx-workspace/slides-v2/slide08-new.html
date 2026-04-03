@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #1A1A1A; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  background: #1A1A1A;
+}
+.top-bar { width: 720pt; height: 6pt; background: #FF5722; }
+.content { margin: 20pt 36pt 16pt 36pt; display: flex; flex-direction: column; flex: 1; }
+.subtitle-bar { background: #FF5722; border-radius: 4pt; padding: 3pt 12pt; display: inline-block; margin-bottom: 6pt; }
+.tiers { display: flex; gap: 8pt; margin-top: 10pt; flex: 1; }
+.tier-card {
+  flex: 1; background: #FFFFFF; border-radius: 10pt; padding: 12pt 10pt;
+  border: 3pt solid #FF5722; display: flex; flex-direction: column;
+}
+.tier-card.alt { border-color: #00BFFF; }
+.callout-bar { background: #00BFFF; border-radius: 6pt; padding: 8pt 16pt; margin-top: 10pt; text-align: center; }
+.common { display: flex; gap: 12pt; margin-top: 6pt; }
+.pill { background: #333333; border-radius: 4pt; padding: 4pt 10pt; }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="content">
+  <div class="subtitle-bar">
+    <p style="color: #FFFFFF; font-size: 8pt; margin: 0; font-weight: bold;">FLEXISHIELD</p>
+  </div>
+  <h1 style="color: #FF5722; font-size: 22pt; margin: 0 0 2pt 0; font-weight: bold;">CHOOSE YOUR DEDUCTIBLE</h1>
+  <p style="color: #AAAAAA; font-size: 9pt; margin: 0;">PHP 2M coverage + PHP 1,000/day hospital income</p>
+
+  <div class="common">
+    <div class="pill"><p style="color: #FFD700; font-size: 8pt; margin: 0; font-weight: bold;">PHP 2M Coverage</p></div>
+    <div class="pill"><p style="color: #FFD700; font-size: 8pt; margin: 0; font-weight: bold;">PHP 1K/Day Income</p></div>
+  </div>
+
+  <div class="tiers">
+    <div class="tier-card">
+      <p style="color: #FF5722; font-size: 16pt; margin: 0; font-weight: bold;">FS 50</p>
+      <p style="color: #1A1A1A; font-size: 9pt; margin: 4pt 0 0 0;">HMO 50K-99K</p>
+      <p style="color: #FF5722; font-size: 14pt; margin: 8pt 0 0 0; font-weight: bold;">P9,350/yr</p>
+      <p style="color: #888888; font-size: 7pt; margin: 2pt 0 0 0;">Age 0-20 starting</p>
+    </div>
+    <div class="tier-card alt">
+      <p style="color: #00BFFF; font-size: 16pt; margin: 0; font-weight: bold;">FS 100</p>
+      <p style="color: #1A1A1A; font-size: 9pt; margin: 4pt 0 0 0;">HMO 100K-149K</p>
+      <p style="color: #00BFFF; font-size: 14pt; margin: 8pt 0 0 0; font-weight: bold;">P7,160/yr</p>
+      <p style="color: #888888; font-size: 7pt; margin: 2pt 0 0 0;">Age 0-20 starting</p>
+    </div>
+    <div class="tier-card">
+      <p style="color: #FF5722; font-size: 16pt; margin: 0; font-weight: bold;">FS 150</p>
+      <p style="color: #1A1A1A; font-size: 9pt; margin: 4pt 0 0 0;">HMO 150K-199K</p>
+      <p style="color: #FF5722; font-size: 14pt; margin: 8pt 0 0 0; font-weight: bold;">P6,510/yr</p>
+      <p style="color: #888888; font-size: 7pt; margin: 2pt 0 0 0;">Age 0-20 starting</p>
+    </div>
+    <div class="tier-card alt">
+      <p style="color: #00BFFF; font-size: 16pt; margin: 0; font-weight: bold;">FS 200</p>
+      <p style="color: #1A1A1A; font-size: 9pt; margin: 4pt 0 0 0;">HMO 200K+</p>
+      <p style="color: #00BFFF; font-size: 14pt; margin: 8pt 0 0 0; font-weight: bold;">P6,510/yr</p>
+      <p style="color: #888888; font-size: 7pt; margin: 2pt 0 0 0;">Age 0-20 starting</p>
+    </div>
+  </div>
+
+  <div class="callout-bar">
+    <p style="color: #FFFFFF; font-size: 9pt; margin: 0; font-weight: bold;">Lower HMO limit = Higher premium. Higher HMO = More savings!</p>
+  </div>
+</div>
+</body>
+</html>
