@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
-    "build": "prisma generate && next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
-    "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/pacific-cross-advisor-hub prisma generate && next build",
+    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/pacific-cross-advisor-hub next build",
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -33,8 +33,7 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:seed": "bun prisma/seed.ts",
-    "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && next build"
+    "vercel-build": "next build"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
