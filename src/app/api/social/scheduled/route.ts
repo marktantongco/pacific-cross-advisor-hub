@@ -1,15 +1,19 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+
+// Mock data for scheduled posts
+const scheduledPosts = [
+  {
+    id: 'post-2',
+    content: 'Your HMO caps at ₱150,000 but hospital bills can reach millions. FlexiShield fills the gap. Message me to learn more! 💪',
+    platform: 'instagram',
+    status: 'scheduled',
+    hashtags: ['FlexiShield', 'HMO', 'HealthInsurance'],
+    scheduledAt: new Date(Date.now() + 86400000).toISOString(),
+    postedAt: null,
+    createdAt: new Date().toISOString()
+  }
+];
 
 export async function GET() {
-  try {
-    const posts = await db.socialPost.findMany({
-      where: { status: 'scheduled' },
-      orderBy: { scheduledAt: 'asc' }
-    });
-    return NextResponse.json(posts);
-  } catch (error) {
-    console.error('Error fetching scheduled posts:', error);
-    return NextResponse.json({ error: 'Failed to fetch scheduled posts' }, { status: 500 });
-  }
+  return NextResponse.json(scheduledPosts);
 }

@@ -1,20 +1,44 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+
+// Mock data for social posts
+const mockPosts = [
+  {
+    id: 'post-1',
+    content: 'Did you know? Only 1.78% of Filipinos have insurance. Protect your family today with Pacific Cross. #InsurancePH #PacificCross #FamilyProtection',
+    platform: 'facebook',
+    status: 'posted',
+    hashtags: ['InsurancePH', 'PacificCross', 'FamilyProtection'],
+    scheduledAt: null,
+    postedAt: new Date(Date.now() - 86400000).toISOString(),
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: 'post-2',
+    content: 'Your HMO caps at ₱150,000 but hospital bills can reach millions. FlexiShield fills the gap. Message me to learn more! 💪',
+    platform: 'instagram',
+    status: 'scheduled',
+    hashtags: ['FlexiShield', 'HMO', 'HealthInsurance'],
+    scheduledAt: new Date(Date.now() + 86400000).toISOString(),
+    postedAt: null,
+    createdAt: new Date().toISOString()
+  }
+];
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { content, platform, hashtags, scheduledAt } = body;
     
-    const post = await db.socialPost.create({
-      data: {
-        content,
-        platform,
-        hashtags,
-        scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
-        status: scheduledAt ? 'scheduled' : 'draft'
-      }
-    });
+    const post = {
+      id: `post-${Date.now()}`,
+      content,
+      platform,
+      hashtags: hashtags || [],
+      scheduledAt: scheduledAt || null,
+      postedAt: null,
+      status: scheduledAt ? 'scheduled' : 'draft',
+      createdAt: new Date().toISOString()
+    };
     
     return NextResponse.json(post);
   } catch (error) {
@@ -24,14 +48,5 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  try {
-    const posts = await db.socialPost.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 20
-    });
-    return NextResponse.json(posts);
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
-  }
+  return NextResponse.json(mockPosts);
 }
