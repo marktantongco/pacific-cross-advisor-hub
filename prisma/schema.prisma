@@ -1,0 +1,158 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../db/custom.db"
+}
+
+// Product Information
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  tagline     String
+  description String
+  coverage    String
+  minCoverage Int
+  maxCoverage Int
+  currency    String   @default("PHP")
+  features    Json     // Array of features
+  benefits    Json     // Array of benefits
+  idealFor    Json     // Array of ideal customer profiles
+  pricing     Json     // Pricing tiers
+  advantages  Json     // Array of advantages
+  disadvantages Json   // Array of disadvantages
+  category    String   // "premium" | "topup" | "basic"
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// FAQ Items
+model FAQ {
+  id          String   @id @default(cuid())
+  question    String
+  answer      String
+  category    String   // "general" | "product" | "claims" | "advisor"
+  productSlug String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Spiel/Conversation Flow
+model SpielStep {
+  id          String   @id @default(cuid())
+  title       String
+  script      String   // The actual script text
+  context     String   // When to use this script
+  category    String   // "opening" | "discovery" | "presentation" | "closing" | "objection"
+  productSlug String?
+  order       Int      @default(0)
+  tips        Json?    // Tips for delivery
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Training Modules
+model TrainingModule {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  content     String   // Markdown content
+  category    String   // "fundamentals" | "products" | "sales" | "market"
+  duration    Int      // Minutes
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Market Statistics
+model MarketStat {
+  id          String   @id @default(cuid())
+  label       String
+  value       String
+  description String?
+  source      String?
+  year        Int
+  category    String   // "penetration" | "premium" | "demographics"
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Calendar Events
+model CalendarEvent {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  type        String   // "training" | "deadline" | "event" | "reminder"
+  isRecurring Boolean  @default(false)
+  recurrence  String?  // "daily" | "weekly" | "monthly"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Roadmap Items
+model RoadmapItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  phase       String   // "week1" | "week2" | "month1" | "month3" | "ongoing"
+  order       Int      @default(0)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Social Media Posts
+model SocialPost {
+  id          String   @id @default(cuid())
+  content     String
+  platform    String   // "facebook" | "instagram" | "linkedin"
+  status      String   @default("draft") // "draft" | "scheduled" | "posted"
+  scheduledAt DateTime?
+  postedAt    DateTime?
+  hashtags    Json?    // Array of hashtags
+  media       Json?    // Array of media URLs
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Presentation Slides
+model PresentationSlide {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   // Markdown content
+  notes       String?  // Speaker notes
+  order       Int      @default(0)
+  section     String?  // Section grouping
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Misconceptions
+model Misconception {
+  id             String   @id @default(cuid())
+  myth           String
+  reality        String
+  explanation    String
+  category       String   // "general" | "product" | "advisor"
+  productSlug    String?
+  order          Int      @default(0)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
