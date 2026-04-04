@@ -1,15 +1,6 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { stats } from '@/lib/data';
 
 export async function GET() {
-  try {
-    const stats = await db.marketStat.findMany({
-      where: { isActive: true },
-      orderBy: { order: 'asc' }
-    });
-    return NextResponse.json(stats);
-  } catch (error) {
-    console.error('Error fetching stats:', error);
-    return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
-  }
+  return NextResponse.json(stats);
 }
