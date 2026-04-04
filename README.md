@@ -40,7 +40,7 @@ This app empowers new insurance advisors with:
 
 | Platform | Status | URL |
 |----------|--------|-----|
-| **Vercel** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [pacific-cross-advisor-hub.vercel.app](https://pacific-cross-advisor-hub.vercel.app) |
+| **Vercel** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [my-project-seven-self.vercel.app](https://my-project-seven-self.vercel.app) |
 | **GitHub Pages** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [marktantongco.github.io/pacific-cross-advisor-hub](https://marktantongco.github.io/pacific-cross-advisor-hub) |
 
 ---
