@@ -41,7 +41,7 @@ This app empowers new insurance advisors with:
 | Platform | Status | URL |
 |----------|--------|-----|
 | **Vercel** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [pacific-cross-advisor-hub.vercel.app](https://pacific-cross-advisor-hub.vercel.app) |
-| **GitHub Pages** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [yourusername.github.io/pacific-cross-advisor-hub](https://yourusername.github.io/pacific-cross-advisor-hub) |
+| **GitHub Pages** | ![Deploy](https://img.shields.io/badge/Status-Live-success?style=flat-square) | [marktantongco.github.io/pacific-cross-advisor-hub](https://marktantongco.github.io/pacific-cross-advisor-hub) |
 
 ---
 
@@ -111,7 +111,7 @@ This app empowers new insurance advisors with:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pacific-cross-advisor-hub.git
+git clone https://github.com/marktantongco/pacific-cross-advisor-hub.git
 cd pacific-cross-advisor-hub
 
 # Install dependencies (using Bun)
@@ -241,7 +241,7 @@ This app features a **brutalist design** with:
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/pacific-cross-advisor-hub)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/marktantongco/pacific-cross-advisor-hub)
 
 1. Fork this repository
 2. Click the deploy button above
