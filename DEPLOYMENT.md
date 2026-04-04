@@ -8,7 +8,7 @@ This guide covers deploying Pacific Cross Advisor Hub to GitHub Pages and Vercel
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/pacific-cross-advisor-hub)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/marktantongco/pacific-cross-advisor-hub)
 
 1. Click the button above
 2. Connect your GitHub account
@@ -32,7 +32,7 @@ This guide covers deploying Pacific Cross Advisor Hub to GitHub Pages and Vercel
 
 3. **Wait for deployment**
    - Check Actions tab for progress
-   - Site will be live at `https://yourusername.github.io/pacific-cross-advisor-hub`
+   - Site will be live at `https://marktantongco.github.io/pacific-cross-advisor-hub`
 
 ### Method 2: Manual Build
 
@@ -56,7 +56,7 @@ This guide covers deploying Pacific Cross Advisor Hub to GitHub Pages and Vercel
 
 1. **Import Project**
    - Go to [vercel.com/new](https://vercel.com/new)
-   - Import your GitHub repository
+   - Import your GitHub repository: `marktantongco/pacific-cross-advisor-hub`
 
 2. **Configure Project**
    - Framework Preset: Next.js
@@ -65,7 +65,8 @@ This guide covers deploying Pacific Cross Advisor Hub to GitHub Pages and Vercel
    - Output Directory: `.next`
 
 3. **Environment Variables**
-   - Add any required environment variables
+   - `DATABASE_URL` - SQLite database path (optional for demo)
+   - `AI_GATEWAY_API_KEY` - Vercel AI Gateway API key (optional)
 
 4. **Deploy**
    - Click Deploy
@@ -115,7 +116,11 @@ The config automatically detects deployment target:
 Create `.env` file with:
 
 ```env
-DATABASE_URL="file:../db/custom.db"
+# Database
+DATABASE_URL="file:./dev.db"
+
+# Vercel AI Gateway (optional - for AI features)
+AI_GATEWAY_API_KEY="your-vercel-ai-gateway-api-key"
 ```
 
 For Vercel, add these in the dashboard under Settings → Environment Variables.
@@ -163,3 +168,4 @@ For Vercel, add these in the dashboard under Settings → Environment Variables.
 - [Next.js Deployment Docs](https://nextjs.org/docs/deployment)
 - [Vercel Documentation](https://vercel.com/docs)
 - [GitHub Pages Documentation](https://docs.github.com/en/pages)
+- [Live Demo](https://marktantongco.github.io/pacific-cross-advisor-hub)
