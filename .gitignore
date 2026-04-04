@@ -67,3 +67,15 @@ temp/
 
 # Skills (keep for development but ignore in production)
 skills/
+
+# System files
+.accesslog
+.config
+.stats
+.zscripts/
+dev.log
+server.log
+*.log
+
+# Uploads
+upload/
