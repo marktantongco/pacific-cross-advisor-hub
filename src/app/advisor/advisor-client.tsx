@@ -15,6 +15,7 @@ import { ClientModeLayout } from '@/components/ClientModeLayout';
 import { SocialCards } from '@/components/SocialCards';
 import type { TabId } from '@/lib/data';
 import { stats } from '@/lib/data';
+import { useGsapNavCascade, useGsapMagneticAll, useGsapThemeTransition } from '@/lib/gsap-engine';
 
 // ============================================================
 // TAB DEFINITIONS — MAPPED TO EDITORIAL GRID
@@ -59,6 +60,8 @@ const TICKER_ITEMS = [
   '👑 75+ YEARS OF PACIFIC CROSS SERVICE',
   '🛡️ FLEXISHIELD FROM ₱6,510/YR',
   '💎 BLUE ROYALE FROM $1,676/YR',
+  '🦫 FLEXISHIELD FROM ₱18/DAY',
+  '🦅 BLUE ROYALE FROM $5/DAY',
 ];
 
 // ============================================================
@@ -186,12 +189,34 @@ export default function AdvisorClient() {
   const { dotRef, ringRef } = useCustomCursor();
   useScrollReveal();
 
-  // Theme toggle
+  // GSAP: nav cascade for sidebar navigation items
+  useGsapNavCascade(contentRef);
+
+  // GSAP: magnetic hover for all CTA buttons
+  useGsapMagneticAll(contentRef);
+
+  // GSAP: theme transition wipe animation
+  const animateThemeTransition = useGsapThemeTransition();
+
+  // Theme toggle with GSAP wipe animation + Owl mode CSS integration
   const toggleTheme = useCallback(() => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-  }, [theme]);
+    animateThemeTransition(() => {
+      const next = theme === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+
+      // Set data-theme attribute
+      document.documentElement.setAttribute('data-theme', next);
+
+      // Toggle owl-mode classes
+      if (next === 'dark') {
+        document.documentElement.classList.add('owl-mode-active');
+        document.documentElement.classList.remove('owl-light-mode');
+      } else {
+        document.documentElement.classList.remove('owl-mode-active');
+        document.documentElement.classList.add('owl-light-mode');
+      }
+    });
+  }, [theme, animateThemeTransition]);
 
   // Load mode from localStorage (or show gateway)
   // Using lazy initializer to avoid setState in effect
@@ -210,6 +235,17 @@ export default function AdvisorClient() {
       document.documentElement.setAttribute('data-mode', mode);
     }
   }, [mode]);
+
+  // Set initial Owl mode class based on current theme
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('owl-mode-active');
+      document.documentElement.classList.remove('owl-light-mode');
+    } else {
+      document.documentElement.classList.remove('owl-mode-active');
+      document.documentElement.classList.add('owl-light-mode');
+    }
+  }, [theme]);
 
   // Load wipe dismiss
   useEffect(() => {
@@ -322,6 +358,9 @@ export default function AdvisorClient() {
             >
               {isAdvisor ? 'Advisor Hub' : 'Client Hub'}
             </span>
+            <span className="arch-badge arch-badge-owl arch-badge-sm">
+              {isAdvisor ? '🦉 Advisor' : '🦉 Client'}
+            </span>
           </div>
 
           {/* Right controls */}
@@ -381,6 +420,7 @@ export default function AdvisorClient() {
                   <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--accent-red)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                     Advisor Mode
                   </span>
+                  <span className="arch-badge arch-badge-eagle arch-badge-sm">🦅 Eagle</span>
                 </div>
 
                 {/* Quick Actions */}
@@ -402,39 +442,59 @@ export default function AdvisorClient() {
                 {/* Protection Plans */}
                 <div className="mt-6 panel-header">Protection Plans</div>
                 <div className="space-y-2">
+                  {/* FlexiShield — Beaver archetype */}
                   <button
                     onClick={() => handleTabChange('products')}
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      01 — FLEXISHIELD
+                    <div className="flex items-center gap-2">
+                      <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        01 — FLEXISHIELD
+                      </div>
+                      <span className="arch-badge arch-badge-beaver arch-badge-sm">🦫 Beaver</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       HMO Hero • From ₱6,510/yr
                     </div>
+                    <div className="arch-price-beaver-daily mt-2">
+                      <span className="price-daily-amount">₱18</span>
+                      <span className="price-daily-label">/day</span>
+                    </div>
                   </button>
 
+                  {/* Blue Royale — Eagle archetype */}
                   <button
                     onClick={() => handleTabChange('products')}
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      02 — BLUE ROYALE
+                    <div className="flex items-center gap-2">
+                      <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        02 — BLUE ROYALE
+                      </div>
+                      <span className="arch-badge arch-badge-eagle arch-badge-sm">🦅 Eagle</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       Legacy Boss • From $1,676/yr
                     </div>
+                    <div className="price-daily mt-2">
+                      <span className="price-daily-amount">$5</span>
+                      <span className="price-daily-label">/day</span>
+                    </div>
                   </button>
 
+                  {/* OFW Plans — Eagle archetype */}
                   <button
                     onClick={() => handleTabChange('products')}
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      03 — OFW PLANS
+                    <div className="flex items-center gap-2">
+                      <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        03 — OFW PLANS
+                      </div>
+                      <span className="arch-badge arch-badge-eagle arch-badge-sm">✈️ OFW</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       Worldwide Coverage • 90 Days/Trip
@@ -487,17 +547,23 @@ export default function AdvisorClient() {
                   </span>
                 </div>
 
-                {/* Trending Stats */}
+                {/* Trending Stats — Owl Analytics */}
                 <div className="panel slide-right-in" style={{ animationDelay: '0.8s' }}>
                   <div className="panel-header" style={{ borderColor: 'var(--accent-red)', color: 'var(--accent-red)' }}>
-                    ⚡ Trending Stats
+                    <div className="flex items-center gap-2">
+                      <span>⚡ Trending Stats</span>
+                      <span className="arch-badge arch-badge-owl arch-badge-sm">🦉 Owl Analytics</span>
+                    </div>
                   </div>
                   <div className="space-y-3">
-                    <div>
-                      <div className="stat-value text-stroke-red" style={{ fontSize: '3rem' }}>
+                    <div className="arch-card-owl-stat">
+                      <div className="arch-card-owl-stat-number text-stroke-red owl-neon-red" style={{ fontSize: '3rem' }}>
                         {(statPenetration / 100).toFixed(2)}%
                       </div>
-                      <div className="stat-label mt-1">PH Insurance Penetration</div>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">PH Insurance Penetration</div>
+                      <div className="arch-card-owl-stat-source font-mono text-[0.55rem] mt-1" style={{ color: 'var(--text-muted)' }}>
+                        Source: Insurance Commission
+                      </div>
                       <div className="w-full h-1 mt-2" style={{ background: 'var(--border)' }}>
                         <div
                           className="h-full"
@@ -510,22 +576,25 @@ export default function AdvisorClient() {
                       </div>
                     </div>
 
-                    <div className="border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-                      <div className="stat-value" style={{ fontSize: '3rem', color: 'var(--accent-yellow)' }}>
+                    <div className="border-t pt-3 arch-card-owl-stat" style={{ borderColor: 'var(--border)' }}>
+                      <div className="arch-card-owl-stat-number stat-value owl-neon-yellow" style={{ fontSize: '3rem', color: 'var(--accent-yellow)' }}>
                         {statUninsured}%
                       </div>
-                      <div className="stat-label mt-1">Filipinos Uninsured</div>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Filipinos Uninsured</div>
+                      <div className="arch-card-owl-stat-source font-mono text-[0.55rem] mt-1" style={{ color: 'var(--text-muted)' }}>
+                        Source: PSA Survey
+                      </div>
                     </div>
 
-                    <div className="border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-                      <div className="font-display text-2xl" style={{ color: 'var(--text)' }}>
+                    <div className="border-t pt-3 arch-card-owl-stat" style={{ borderColor: 'var(--border)' }}>
+                      <div className="arch-card-owl-stat-number font-display text-2xl owl-neon-cyan" style={{ color: 'var(--text)' }}>
                         ₱8,000
                       </div>
-                      <div className="stat-label mt-1">Annual Mobile Load Spend</div>
-                      <div className="font-display text-2xl mt-2" style={{ color: 'var(--accent-red)' }}>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Annual Mobile Load Spend</div>
+                      <div className="arch-card-owl-stat-number font-display text-2xl mt-2 owl-neon-red" style={{ color: 'var(--accent-red)' }}>
                         ₱500
                       </div>
-                      <div className="stat-label mt-1">Annual Insurance Spend</div>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Annual Insurance Spend</div>
                       <div className="font-mono text-[0.6rem] mt-2" style={{ color: 'var(--accent-yellow)' }}>
                         16× MORE ON LOAD THAN PROTECTION
                       </div>
@@ -533,19 +602,27 @@ export default function AdvisorClient() {
                   </div>
                 </div>
 
-                {/* Social Card Preview */}
+                {/* Social Card Preview — Ant Social */}
                 <div className="panel mt-4 slide-right-in" style={{ animationDelay: '0.85s' }}>
                   <div className="panel-header" style={{ borderColor: 'var(--accent-yellow)', color: 'var(--accent-yellow)' }}>
-                    📱 Social Card Preview
+                    <div className="flex items-center gap-2">
+                      <span>📱 Social Card Preview</span>
+                      <span className="arch-badge arch-badge-ant arch-badge-sm">🐜 Ant Social</span>
+                    </div>
                   </div>
                   <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
                     <SocialCards compact />
                   </div>
                 </div>
 
-                {/* Daily Insight */}
-                <div className="panel mt-4 slide-right-in" style={{ animationDelay: '0.9s' }}>
-                  <div className="panel-header">📊 Daily Insight</div>
+                {/* Daily Insight — Owl archetype */}
+                <div className="panel mt-4 slide-right-in" style={{ animationDelay: '0.9s' }} data-archetype="owl">
+                  <div className="panel-header">
+                    <div className="flex items-center gap-2">
+                      <span>📊 Daily Insight</span>
+                      <span className="arch-badge arch-badge-owl arch-badge-sm">🦉 Owl</span>
+                    </div>
+                  </div>
                   <div className="p-3 border" style={{ background: 'var(--accent-red-dim)', borderColor: 'var(--accent-red)' }}>
                     <p className="font-sub text-sm font-bold" style={{ color: 'var(--accent-red)' }}>
                       &ldquo;Most Filipinos insure their phones before their lives.&rdquo;
@@ -556,16 +633,21 @@ export default function AdvisorClient() {
                   </div>
                 </div>
 
-                {/* Expert Advisors */}
+                {/* Expert Advisors — Ant Leaderboard */}
                 <div className="panel mt-4 slide-right-in" style={{ animationDelay: '1s' }}>
-                  <div className="panel-header">🏆 Expert Advisors</div>
+                  <div className="panel-header">
+                    <div className="flex items-center gap-2">
+                      <span>🏆 Expert Advisors</span>
+                      <span className="arch-badge arch-badge-ant arch-badge-sm">🐜 Ant Leaderboard</span>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     {[
                       { name: 'Top Advisor', stat: '52 Policies / Q1', icon: '🥇' },
                       { name: 'Rising Star', stat: '23 Policies / Q1', icon: '🥈' },
                       { name: 'New Recruit', stat: '8 Policies / Q1', icon: '🥉' },
                     ].map((advisor, i) => (
-                      <div key={i} className="flex items-center gap-3 p-2 border hover-card">
+                      <div key={i} className="arch-card-ant-social-proof flex items-center gap-3 p-2 border hover-card">
                         <span className="text-lg">{advisor.icon}</span>
                         <div>
                           <div className="font-sub text-xs font-bold">{advisor.name}</div>
@@ -578,14 +660,19 @@ export default function AdvisorClient() {
                   </div>
                 </div>
 
-                {/* Protection Score */}
-                <div className="panel mt-4 slide-right-in" style={{ animationDelay: '1.1s' }}>
-                  <div className="panel-header">🎯 Protection Score</div>
+                {/* Protection Score — Owl archetype */}
+                <div className="panel mt-4 slide-right-in" style={{ animationDelay: '1.1s' }} data-archetype="owl">
+                  <div className="panel-header">
+                    <div className="flex items-center gap-2">
+                      <span>🎯 Protection Score</span>
+                      <span className="arch-badge arch-badge-owl arch-badge-sm">🦉 Owl</span>
+                    </div>
+                  </div>
                   <div className="text-center py-4">
-                    <div className="font-display text-5xl" style={{ color: 'var(--accent-yellow)' }}>
+                    <div className="arch-card-owl-stat-number font-display text-5xl owl-neon-yellow" style={{ color: 'var(--accent-yellow)' }}>
                       73<span className="text-2xl" style={{ color: 'var(--text-muted)' }}>/100</span>
                     </div>
-                    <div className="font-mono text-[0.6rem] mt-2" style={{ color: 'var(--text-muted)' }}>
+                    <div className="arch-card-owl-stat-explanation font-mono text-[0.6rem] mt-2" style={{ color: 'var(--text-muted)' }}>
                       YOUR READINESS RATING
                     </div>
                     <div className="flex gap-1 mt-3 justify-center flex-wrap">
@@ -598,9 +685,14 @@ export default function AdvisorClient() {
                   </div>
                 </div>
 
-                {/* Contact */}
+                {/* Contact — Beaver archetype */}
                 <div className="panel mt-4 slide-right-in" style={{ animationDelay: '1.2s' }}>
-                  <div className="panel-header">📞 Contact</div>
+                  <div className="panel-header">
+                    <div className="flex items-center gap-2">
+                      <span>📞 Contact</span>
+                      <span className="arch-badge arch-badge-beaver arch-badge-sm">🦫 Beaver Contact</span>
+                    </div>
+                  </div>
                   <div className="font-mono text-[0.6rem] space-y-1" style={{ color: 'var(--text-muted)' }}>
                     <p>📞 +63 2 8230-8511</p>
                     <p>📧 info@pacificcross.com.ph</p>
@@ -617,7 +709,7 @@ export default function AdvisorClient() {
       </div>
 
       {/* ===== MOBILE NAVIGATION (shown < 900px) ===== */}
-      <div className="mobile-nav md:hidden">
+      <div className="mobile-nav md:hidden" data-archetype="eagle">
         <div className="flex items-center justify-around">
           {MOBILE_TABS.map((tab) => (
             <button

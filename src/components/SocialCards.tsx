@@ -9,8 +9,11 @@ import { misconceptions, stats, products, aseanComparison } from '@/lib/data';
 function MythBusterCard() {
   const items = misconceptions.slice(0, 3);
   return (
-    <div className="social-card social-card-myth card-comic">
-      <div className="social-card-header">Myth vs Fact</div>
+    <div data-archetype="owl" className="social-card social-card-myth card-comic">
+      <div className="social-card-header">
+        Myth vs Fact
+        <span className="arch-badge arch-badge-owl arch-badge-sm">Owl Fact-Check</span>
+      </div>
       <div className="social-card-body" style={{ padding: 0 }}>
         {items.map((item, i) => (
           <div key={i} className="myth-item">
@@ -38,8 +41,11 @@ function MythBusterCard() {
 // ============================================================
 function HospitalBillsCard() {
   return (
-    <div className="social-card social-card-hospital card-comic">
-      <div className="social-card-header">Hospital Bills Reality</div>
+    <div data-archetype="eagle" className="social-card social-card-hospital card-comic">
+      <div className="social-card-header">
+        Hospital Bills Reality
+        <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle Data</span>
+      </div>
       <div className="social-card-body">
         <div className="bill-comparison">
           <div className="bill-side bill-side-before">
@@ -82,7 +88,13 @@ function HospitalBillsCard() {
 function ChooseYourArmorCard() {
   return (
     <div className="social-card social-card-armor card-comic-lg">
-      <div className="social-card-header">Choose Your Armor</div>
+      <div className="social-card-header">
+        Choose Your Armor
+        <div style={{ display: 'flex', gap: '0.35rem', marginTop: '0.25rem' }}>
+          <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver Pick</span>
+          <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle Premium</span>
+        </div>
+      </div>
       <div className="armor-comparison">
         <div className="armor-side armor-side-flexi">
           <span style={{ fontSize: '2rem' }} aria-hidden="true">🛡️</span>
@@ -95,6 +107,9 @@ function ChooseYourArmorCard() {
           <p className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
             From ₱6,510/yr
           </p>
+          <div className="arch-price-beaver-daily" style={{ marginTop: '0.25rem' }}>
+            <span className="arch-price-beaver-daily-unit">₱18</span>/day
+          </div>
           <p className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
             PHP 2M coverage
           </p>
@@ -110,6 +125,10 @@ function ChooseYourArmorCard() {
           <p className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
             From $1,676/yr
           </p>
+          <div className="price-daily" style={{ marginTop: '0.25rem' }}>
+            <span className="price-daily-amount">$5</span>
+            <span className="price-daily-label">/day</span>
+          </div>
           <p className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
             USD 2M worldwide
           </p>
@@ -129,8 +148,11 @@ function EducatorCard() {
     { icon: '🏠', text: 'Insurance = Heirloom. Pass it on. Protect the next generation.' },
   ];
   return (
-    <div className="social-card social-card-educator card-comic">
-      <div className="social-card-header">Educator, Not Seller</div>
+    <div data-archetype="ant" className="social-card social-card-educator card-comic">
+      <div className="social-card-header">
+        Educator, Not Seller
+        <span className="arch-badge arch-badge-ant arch-badge-sm">Ant Wisdom</span>
+      </div>
       <div className="social-card-body">
         <p className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-dim)', marginBottom: '0.75rem' }}>
           Use analogies that hit different:
@@ -156,8 +178,11 @@ function PHDataCard() {
     { label: 'Filipinos Uninsured', value: 70, max: 100, color: 'var(--accent-red)', suffix: '%' },
   ];
   return (
-    <div className="social-card social-card-data card-comic">
-      <div className="social-card-header">PH Insurance Data</div>
+    <div data-archetype="owl" className="social-card social-card-data card-comic">
+      <div className="social-card-header">
+        PH Insurance Data
+        <span className="arch-badge arch-badge-owl arch-badge-sm">Owl Stats</span>
+      </div>
       <div className="social-card-body">
         {dataBars.map((bar, i) => (
           <div key={i} className="data-bar-container">
@@ -188,8 +213,11 @@ function PHDataCard() {
 // ============================================================
 function VisionCard() {
   return (
-    <div className="social-card social-card-vision card-comic-lg">
-      <div className="social-card-header">Your Future. No Cap.</div>
+    <div data-archetype="eagle" className="social-card social-card-vision card-comic-lg">
+      <div className="social-card-header">
+        Your Future. No Cap.
+        <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle Vision</span>
+      </div>
       <div className="vision-text panel-gradient-orange" style={{ color: 'var(--bg)' }}>
         <div style={{ fontSize: '0.7rem', marginBottom: '0.5rem', fontFamily: "'DM Mono', monospace", fontWeight: 400 }}>
           Your Aspiration
@@ -224,9 +252,12 @@ export function SocialCards({ compact = false }: SocialCardsProps) {
           <h3 className="panel-header" style={{ border: 'none', margin: 0, padding: 0 }}>
             Social Card Templates
           </h3>
-          <p className="font-mono mt-1" style={{ color: 'var(--text-muted)', fontSize: '0.6rem' }}>
-            6 themed cards for your social media content
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem' }}>
+            <span className="arch-badge arch-badge-ant arch-badge-sm">Ant Gallery</span>
+            <p className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.6rem' }}>
+              6 themed cards for your social media content
+            </p>
+          </div>
         </div>
       )}
       <div className={compact ? 'space-y-3' : 'grid gap-4 md:grid-cols-2'}>

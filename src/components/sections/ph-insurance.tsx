@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { AseanBarChart, AgeDemographicsPie, InsuranceRatePie, FinancialRuinChart } from '@/components/charts/insurance-charts';
 import { aseanComparison, lifeStages, ofwStats, ageDemographics, competitors, pcxAdvantages, dailyPricing, archetypes, type Archetype } from '@/lib/data';
+import { useGsapContext, useGsapScrollReveal, gsap } from '@/lib/gsap-engine';
 
 type PhView = 'overview' | 'asean' | 'demographics' | 'lifecycle' | 'ofw' | 'future' | 'competitive';
 
@@ -28,6 +29,35 @@ function RevealSection({ children, className = '', delay = 0 }: { children: Reac
 
 export function PhInsuranceSection() {
   const [view, setView] = useState<PhView>('overview');
+
+  // GSAP: counter animation for numeric stats in overview
+  useGsapContext(() => {
+    gsap.utils.toArray<HTMLElement>('[data-gsap-counter]').forEach((el) => {
+      const target = parseFloat(el.dataset.gsapCounter || '0');
+      const prefix = el.dataset.gsapPrefix || '';
+      const suffix = el.dataset.gsapSuffix || '';
+      const decimals = parseInt(el.dataset.gsapDecimals || '0');
+      const obj = { value: 0 };
+
+      gsap.to(obj, {
+        value: target,
+        duration: 2,
+        ease: 'power1.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'center 80%',
+          once: true,
+        },
+        onUpdate: () => {
+          const display = decimals > 0 ? obj.value.toFixed(decimals) : Math.round(obj.value);
+          el.textContent = `${prefix}${display}${suffix}`;
+        },
+      });
+    });
+  });
+
+  // GSAP: scroll reveal for .reveal-section elements
+  useGsapScrollReveal();
 
   const navItems: { id: PhView; label: string; emoji: string }[] = [
     { id: 'overview', label: 'Overview', emoji: '📊' },
@@ -64,7 +94,7 @@ export function PhInsuranceSection() {
         <div className="space-y-4">
           <RevealSection>
             <div className="p-6 text-center" style={{ border: '3px solid var(--accent-red)', background: 'var(--bg)' }}>
-              <p className="font-display text-5xl sm:text-6xl" style={{ color: 'var(--accent-red)' }}>1.79%</p>
+              <p className="font-display text-5xl sm:text-6xl" style={{ color: 'var(--accent-red)' }} data-gsap-counter="1.79" data-gsap-suffix="%" data-gsap-decimals="2">1.79%</p>
               <p className="font-display text-xl mt-1">INSURANCE PENETRATION</p>
               <p className="font-mono text-xs mt-2" style={{ color: 'var(--text-muted)' }}>One of the lowest in ASEAN</p>
             </div>
@@ -73,14 +103,24 @@ export function PhInsuranceSection() {
           <RevealSection delay={100}>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: 'Insurance Density', value: '$75.05', sub: 'per capita / year', accent: 'var(--accent-red)' },
-                { label: 'Uninsured', value: '70%', sub: 'beyond PhilHealth', accent: 'var(--accent-yellow)' },
-                { label: 'Medical Inflation', value: '11-12%', sub: 'annually', accent: 'var(--accent-red)' },
-                { label: 'OFW Population', value: '2.2M', sub: 'working abroad', accent: 'var(--accent-yellow)' },
+                { label: 'Insurance Density', value: '$75.05', sub: 'per capita / year', accent: 'var(--accent-red)', numeric: false },
+                { label: 'Uninsured', value: '70%', sub: 'beyond PhilHealth', accent: 'var(--accent-yellow)', numeric: true, target: 70, suffix: '%' },
+                { label: 'Medical Inflation', value: '11-12%', sub: 'annually', accent: 'var(--accent-red)', numeric: false },
+                { label: 'OFW Population', value: '2.2M', sub: 'working abroad', accent: 'var(--accent-yellow)', numeric: true, target: 2.2, suffix: 'M', decimals: 1 },
               ].map((stat, i) => (
                 <div key={i} className="panel text-center">
                   <p className="stat-label">{stat.label}</p>
-                  <p className="font-display text-2xl mt-1" style={{ color: stat.accent }}>{stat.value}</p>
+                  <p
+                    className="font-display text-2xl mt-1"
+                    style={{ color: stat.accent }}
+                    {...(stat.numeric ? {
+                      'data-gsap-counter': String(stat.target),
+                      'data-gsap-suffix': stat.suffix,
+                      'data-gsap-decimals': String(stat.decimals || 0),
+                    } : {})}
+                  >
+                    {stat.value}
+                  </p>
                   <p className="font-mono" style={{ color: 'var(--text-dim)', fontSize: '0.55rem' }}>{stat.sub}</p>
                 </div>
               ))}

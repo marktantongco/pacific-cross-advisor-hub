@@ -5007,3 +5007,59 @@ input[type="range"]::-moz-range-thumb {
     flex-wrap: wrap;
   }
 }
+
+/* ============================================================
+* OWL MODE TRIGGER CLASSES — Dynamic dark/light switching
+* ============================================================ */
+
+/* Dark mode activates owl neon effects */
+html[data-theme="dark"].owl-mode-active .owl-neon-red,
+html[data-theme="dark"] .owl-neon-red {
+  text-shadow: 0 0 8px rgba(224, 31, 31, 0.6), 0 0 16px rgba(224, 31, 31, 0.3);
+}
+
+html[data-theme="dark"].owl-mode-active .owl-neon-cyan,
+html[data-theme="dark"] .owl-neon-cyan {
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.6), 0 0 16px rgba(0, 212, 255, 0.3);
+}
+
+html[data-theme="dark"].owl-mode-active .owl-neon-yellow,
+html[data-theme="dark"] .owl-neon-yellow {
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.6), 0 0 16px rgba(245, 158, 11, 0.3);
+}
+
+/* Light mode disables owl neon effects */
+html[data-theme="light"] .owl-neon-red,
+html[data-theme="light"] .owl-neon-cyan,
+html[data-theme="light"] .owl-neon-yellow {
+  text-shadow: none;
+}
+
+html[data-theme="light"] .owl-scanline {
+  display: none;
+}
+
+html[data-theme="light"] .owl-noise {
+  display: none;
+}
+
+html[data-theme="light"] .owl-cursor-blink {
+  animation: none;
+  border-right-color: var(--text);
+}
+
+/* Light mode glassmorphism */
+html[data-theme="light"] .owl-glass-dark {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+/* Smooth theme transition */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}

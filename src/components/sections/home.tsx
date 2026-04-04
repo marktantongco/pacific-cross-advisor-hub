@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { stats, products, archetypes, dailyPricing } from '@/lib/data';
+import { useGsapScrollReveal, useGsapMagneticAll, useGsapContext, gsap } from '@/lib/gsap-engine';
 
 interface HomeSectionProps {
   onNavigate: (tab: string) => void;
@@ -10,26 +11,49 @@ interface HomeSectionProps {
 export function HomeSection({ onNavigate }: HomeSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const root = containerRef.current;
-    if (!root) return;
+  // GSAP: scroll reveal for all .reveal-section elements
+  useGsapScrollReveal(containerRef);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
+  // GSAP: magnetic hover for all CTA buttons
+  useGsapMagneticAll(containerRef);
 
-    const sections = root.querySelectorAll('.reveal-section');
-    sections.forEach((el) => observer.observe(el));
+  // GSAP: counter animation for quick stats numbers
+  useGsapContext(() => {
+    gsap.utils.toArray<HTMLElement>('.arch-card-owl-stat-number[data-target]').forEach((el) => {
+      const target = parseFloat(el.dataset.target || '0');
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const decimals = parseInt(el.dataset.decimals || '0');
+      const obj = { value: 0 };
 
-    return () => observer.disconnect();
-  }, []);
+      gsap.to(obj, {
+        value: target,
+        duration: 2,
+        ease: 'power1.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'center 80%',
+          once: true,
+        },
+        onUpdate: () => {
+          const display = decimals > 0 ? obj.value.toFixed(decimals) : Math.round(obj.value);
+          el.textContent = `${prefix}${display}${suffix}`;
+        },
+      });
+    });
+  }, containerRef);
+
+  // GSAP: .ant-lift hover animation for product cards (Choose Your Armor)
+  useGsapContext(() => {
+    gsap.utils.toArray<HTMLElement>('.hover-card.ant-lift-trigger').forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { y: -4, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { y: 0, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+      });
+    });
+  }, containerRef);
 
   const flexiDaily = dailyPricing.flexiShield[0].daily;
   const blueDaily = dailyPricing.blueRoyale[0].daily;
@@ -111,7 +135,12 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
         <div className="grid grid-cols-2 gap-3">
           {stats.quickStats.map((stat, i) => (
             <div key={i} className="arch-card-owl-stat stagger-child">
-              <div className="arch-card-owl-stat-number">
+              <div
+                className="arch-card-owl-stat-number"
+                data-target={typeof stat.value === 'number' ? String(stat.value) : undefined}
+                data-prefix={stat.prefix || ''}
+                data-suffix={stat.suffix || ''}
+              >
                 {stat.prefix || ''}
                 {stat.value}
                 {stat.suffix}
@@ -140,7 +169,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
           </div>
 
           <h2
-            className="font-display stagger-child"
+            className="font-display stagger-child owl-neon-red"
             style={{ fontSize: 'clamp(2.5rem, 12vw, 5.5rem)', color: 'var(--accent-red)' }}
           >
             LESS THAN 2% COVERED
@@ -186,7 +215,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
                 &#x1F4F1;
               </div>
               <div
-                className="font-display"
+                className="font-display owl-neon-yellow"
                 style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', color: 'var(--accent-yellow)' }}
               >
                 ₱8,000
@@ -200,7 +229,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
                 &#x1F3E5;
               </div>
               <div
-                className="font-display"
+                className="font-display owl-neon-red"
                 style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', color: 'var(--accent-red)' }}
               >
                 ₱500
@@ -240,7 +269,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
           {/* FlexiShield Card — Beaver Archetype */}
           <div
             data-archetype="beaver"
-            className="hover-card p-5 stagger-child cursor-pointer anim-beaver-pulse"
+            className="hover-card p-5 stagger-child cursor-pointer anim-beaver-pulse ant-lift-trigger"
             style={{ borderLeft: '3px solid var(--accent-yellow)' }}
             onClick={() => onNavigate('products')}
             role="button"
@@ -283,7 +312,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
           {/* Blue Royale Card — Eagle Archetype */}
           <div
             data-archetype="eagle"
-            className="hover-card p-5 stagger-child cursor-pointer anim-eagle-glow"
+            className="hover-card p-5 stagger-child cursor-pointer anim-eagle-glow ant-lift-trigger"
             style={{ borderLeft: '3px solid var(--accent-red)' }}
             onClick={() => onNavigate('products')}
             role="button"

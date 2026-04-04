@@ -64,6 +64,8 @@ const TICKER_ITEMS = [
   '👑 75+ YEARS OF PACIFIC CROSS SERVICE',
   '🛡️ FLEXISHIELD FROM ₱6,510/YR',
   '💎 BLUE ROYALE FROM $1,676/YR',
+  '🦫 FLEXISHIELD FROM ₱18/DAY',
+  '🦅 BLUE ROYALE FROM $5/DAY',
 ];
 
 // ============================================================
@@ -237,6 +239,7 @@ export default function HomeClient() {
             >
               {isAdvisor ? 'Advisor Hub' : 'Client Hub'}
             </span>
+            <span className="arch-badge arch-badge-owl arch-badge-sm">Wisdom</span>
           </div>
 
           {/* Right controls */}
@@ -296,6 +299,7 @@ export default function HomeClient() {
                   <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--accent-red)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                     Advisor Mode
                   </span>
+                  <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle</span>
                 </div>
 
                 {/* Quick Actions */}
@@ -321,12 +325,19 @@ export default function HomeClient() {
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      01 — FLEXISHIELD
+                    <div className="flex items-center gap-2">
+                      <span className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        01 — FLEXISHIELD
+                      </span>
+                      <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       HMO Hero • From ₱6,510/yr
                     </div>
+                    <div className="arch-price-beaver-daily mt-1">
+                      <span className="arch-price-beaver-daily-unit">₱18</span>
+                      <span className="font-mono text-[0.55rem]" style={{ color: 'var(--text-muted)' }}>/day</span>
+                    </div>
                   </button>
 
                   <button
@@ -334,12 +345,19 @@ export default function HomeClient() {
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      02 — BLUE ROYALE
+                    <div className="flex items-center gap-2">
+                      <span className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        02 — BLUE ROYALE
+                      </span>
+                      <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       Legacy Boss • From $1,676/yr
                     </div>
+                    <div className="price-daily mt-1">
+                      <span className="price-daily-amount">$5</span>
+                      <span className="price-daily-label">/day</span>
+                    </div>
                   </button>
 
                   <button
@@ -347,8 +365,11 @@ export default function HomeClient() {
                     className="w-full text-left p-3 border hover-card"
                     style={{ borderColor: 'var(--border)' }}
                   >
-                    <div className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
-                      03 — OFW PLANS
+                    <div className="flex items-center gap-2">
+                      <span className="font-sub text-sm font-bold" style={{ color: 'var(--accent-yellow)' }}>
+                        03 — OFW PLANS
+                      </span>
+                      <span className="arch-badge arch-badge-eagle arch-badge-sm">OFW</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-1" style={{ color: 'var(--text-muted)' }}>
                       Worldwide Coverage • 90 Days/Trip
@@ -404,14 +425,18 @@ export default function HomeClient() {
                 {/* Trending Stats */}
                 <div className="panel">
                   <div className="panel-header" style={{ borderColor: 'var(--accent-red)', color: 'var(--accent-red)' }}>
-                    ⚡ Trending Stats
+                    <span>⚡ Trending Stats</span>
+                    <span className="arch-badge arch-badge-owl arch-badge-sm">Owl Analytics</span>
                   </div>
                   <div className="space-y-3">
-                    <div>
-                      <div ref={statPenetrationRef} className="stat-value text-stroke-red" style={{ fontSize: '3rem' }}>
+                    <div className="arch-card-owl-stat">
+                      <div ref={statPenetrationRef} className="arch-card-owl-stat-number stat-value text-stroke-red" style={{ fontSize: '3rem' }}>
                         0%
                       </div>
-                      <div className="stat-label mt-1">PH Insurance Penetration</div>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">PH Insurance Penetration</div>
+                      <div className="arch-card-owl-stat-source font-mono text-[0.55rem] mt-1" style={{ color: 'var(--text-muted)' }}>
+                        Source: Insurance Commission PH
+                      </div>
                       <div className="w-full h-1 mt-2" style={{ background: 'var(--border)' }}>
                         <div
                           className="h-full"
@@ -424,23 +449,26 @@ export default function HomeClient() {
                       </div>
                     </div>
 
-                    <div className="border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-                      <div ref={statUninsuredRef} className="stat-value" style={{ fontSize: '3rem', color: 'var(--accent-yellow)' }}>
+                    <div className="border-t pt-3 arch-card-owl-stat" style={{ borderColor: 'var(--border)' }}>
+                      <div ref={statUninsuredRef} className="arch-card-owl-stat-number stat-value" style={{ fontSize: '3rem', color: 'var(--accent-yellow)' }}>
                         0%
                       </div>
-                      <div className="stat-label mt-1">Filipinos Uninsured</div>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Filipinos Uninsured</div>
+                      <div className="arch-card-owl-stat-source font-mono text-[0.55rem] mt-1" style={{ color: 'var(--text-muted)' }}>
+                        Source: PSA Survey 2023
+                      </div>
                     </div>
 
-                    <div className="border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-                      <div className="font-display text-2xl" style={{ color: 'var(--text)' }}>
+                    <div className="border-t pt-3 arch-card-owl-stat" style={{ borderColor: 'var(--border)' }}>
+                      <div className="arch-card-owl-stat-number font-display text-2xl" style={{ color: 'var(--text)' }}>
                         ₱8,000
                       </div>
-                      <div className="stat-label mt-1">Annual Mobile Load Spend</div>
-                      <div className="font-display text-2xl mt-2" style={{ color: 'var(--accent-red)' }}>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Annual Mobile Load Spend</div>
+                      <div className="arch-card-owl-stat-number font-display text-2xl mt-2" style={{ color: 'var(--accent-red)' }}>
                         ₱500
                       </div>
-                      <div className="stat-label mt-1">Annual Insurance Spend</div>
-                      <div className="font-mono text-[0.6rem] mt-2" style={{ color: 'var(--accent-yellow)' }}>
+                      <div className="arch-card-owl-stat-explanation stat-label mt-1">Annual Insurance Spend</div>
+                      <div className="arch-card-owl-stat-source font-mono text-[0.6rem] mt-2" style={{ color: 'var(--accent-yellow)' }}>
                         16× MORE ON LOAD THAN PROTECTION
                       </div>
                     </div>
@@ -450,7 +478,8 @@ export default function HomeClient() {
                 {/* Social Card Preview */}
                 <div className="panel mt-4">
                   <div className="panel-header" style={{ borderColor: 'var(--accent-yellow)', color: 'var(--accent-yellow)' }}>
-                    📱 Social Card Preview
+                    <span>📱 Social Card Preview</span>
+                    <span className="arch-badge arch-badge-ant arch-badge-sm">Ant Social</span>
                   </div>
                   <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
                     <SocialCards compact />
@@ -458,8 +487,11 @@ export default function HomeClient() {
                 </div>
 
                 {/* Daily Insight */}
-                <div className="panel mt-4">
-                  <div className="panel-header">📊 Daily Insight</div>
+                <div className="panel mt-4" data-archetype="owl">
+                  <div className="panel-header">
+                    <span>📊 Daily Insight</span>
+                    <span className="arch-badge arch-badge-owl arch-badge-sm">Owl</span>
+                  </div>
                   <div className="p-3 border" style={{ background: 'var(--accent-red-dim)', borderColor: 'var(--accent-red)' }}>
                     <p className="font-sub text-sm font-bold" style={{ color: 'var(--accent-red)' }}>
                       &ldquo;Most Filipinos insure their phones before their lives.&rdquo;
@@ -472,14 +504,17 @@ export default function HomeClient() {
 
                 {/* Expert Advisors */}
                 <div className="panel mt-4">
-                  <div className="panel-header">🏆 Expert Advisors</div>
+                  <div className="panel-header">
+                    <span>🏆 Expert Advisors</span>
+                    <span className="arch-badge arch-badge-ant arch-badge-sm">Ant Leaderboard</span>
+                  </div>
                   <div className="space-y-2">
                     {[
                       { name: 'Top Advisor', stat: '52 Policies / Q1', icon: '🥇' },
                       { name: 'Rising Star', stat: '23 Policies / Q1', icon: '🥈' },
                       { name: 'New Recruit', stat: '8 Policies / Q1', icon: '🥉' },
                     ].map((advisor, i) => (
-                      <div key={i} className="flex items-center gap-3 p-2 border hover-card">
+                      <div key={i} className="arch-card-ant-social-proof flex items-center gap-3 p-2 border hover-card">
                         <span className="text-lg">{advisor.icon}</span>
                         <div>
                           <div className="font-sub text-xs font-bold">{advisor.name}</div>
@@ -493,10 +528,13 @@ export default function HomeClient() {
                 </div>
 
                 {/* Protection Score */}
-                <div className="panel mt-4">
-                  <div className="panel-header">🎯 Protection Score</div>
+                <div className="panel mt-4" data-archetype="owl">
+                  <div className="panel-header">
+                    <span>🎯 Protection Score</span>
+                    <span className="arch-badge arch-badge-owl arch-badge-sm">Owl</span>
+                  </div>
                   <div className="text-center py-4">
-                    <div className="font-display text-5xl" style={{ color: 'var(--accent-yellow)' }}>
+                    <div className="arch-card-owl-stat-number font-display text-5xl" style={{ color: 'var(--accent-yellow)' }}>
                       73<span className="text-2xl" style={{ color: 'var(--text-muted)' }}>/100</span>
                     </div>
                     <div className="font-mono text-[0.6rem] mt-2" style={{ color: 'var(--text-muted)' }}>
@@ -514,7 +552,10 @@ export default function HomeClient() {
 
                 {/* Contact */}
                 <div className="panel mt-4">
-                  <div className="panel-header">📞 Contact</div>
+                  <div className="panel-header">
+                    <span>📞 Contact</span>
+                    <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver Contact</span>
+                  </div>
                   <div className="font-mono text-[0.6rem] space-y-1" style={{ color: 'var(--text-muted)' }}>
                     <p>📞 +63 2 8230-8511</p>
                     <p>📧 info@pacificcross.com.ph</p>
@@ -531,7 +572,7 @@ export default function HomeClient() {
       </div>
 
       {/* ===== MOBILE NAVIGATION (shown < 900px) ===== */}
-      <div className="mobile-nav md:hidden">
+      <div className="mobile-nav md:hidden" data-archetype="eagle">
         <div className="flex items-center justify-around">
           {MOBILE_TABS.map((tab) => (
             <button

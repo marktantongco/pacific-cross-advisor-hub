@@ -10,8 +10,9 @@ import {
   type FlexiShieldTier,
   flexiShieldTiers,
 } from '@/lib/data';
+import { PremiumCalculator } from '@/components/PremiumCalculator';
 
-type ClientView = 'wizard' | 'estimator' | 'benefits' | 'faq' | 'contact';
+type ClientView = 'wizard' | 'estimator' | 'calculator' | 'benefits' | 'faq' | 'contact';
 
 function RevealSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -59,6 +60,7 @@ export function ClientHubSection() {
   const navItems: { id: ClientView; label: string; emoji: string }[] = [
     { id: 'wizard', label: 'Find Plan', emoji: '🎯' },
     { id: 'estimator', label: 'Estimate', emoji: '🧮' },
+    { id: 'calculator', label: 'Calculator', emoji: '🧾' },
     { id: 'benefits', label: 'Benefits', emoji: '✨' },
     { id: 'faq', label: 'FAQ', emoji: '❓' },
     { id: 'contact', label: 'Contact', emoji: '📧' },
@@ -355,6 +357,24 @@ export function ClientHubSection() {
             <div className="sticker" style={{ transform: 'rotate(-1deg)' }}>
               ⚠️ Prices from official brochures. Contact Pacific Cross for binding quotes.
             </div>
+          </RevealSection>
+        </div>
+      )}
+
+      {/* ===== CALCULATOR ===== */}
+      {view === 'calculator' && (
+        <div className="space-y-4">
+          <RevealSection>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="panel-header" style={{ border: 'none', margin: 0, padding: 0 }}>Premium Calculator</h3>
+                <span className="arch-badge arch-badge-beaver">Beaver</span>
+              </div>
+              <p className="font-mono mt-1" style={{ color: 'var(--text-muted)' }}>Interactive quote with coverage tiers, dependents, and daily cost breakdown</p>
+            </div>
+          </RevealSection>
+          <RevealSection delay={100}>
+            <PremiumCalculator />
           </RevealSection>
         </div>
       )}

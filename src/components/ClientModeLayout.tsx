@@ -1,30 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { products, stats, quizQuestions } from '@/lib/data';
 import { FlexiShieldBadge, BlueRoyaleBadge } from '@/components/ProductBadge';
 import { QuizFlow } from '@/components/interactive/quiz-flow';
 import { SocialCards } from '@/components/SocialCards';
+import { useGsapScrollReveal, useGsapMagneticAll } from '@/lib/gsap-engine';
 
 // ============================================================
-// REVEAL ON SCROLL HOOK
+// GSAP REVEAL ON SCROLL — replaces IntersectionObserver useReveal
 // ============================================================
-function useReveal() {
+function useGsapReveal() {
   const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const root = ref.current;
-    if (!root) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-    root.querySelectorAll('.reveal-section').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  useGsapScrollReveal(ref);
+  useGsapMagneticAll(ref);
   return ref;
 }
 
@@ -152,19 +141,22 @@ interface ClientModeLayoutProps {
 }
 
 export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
-  const containerRef = useReveal();
+  const containerRef = useGsapReveal();
   const [quizSection, setQuizSection] = useState(false);
 
   return (
     <div ref={containerRef} className="client-layout space-y-8 pb-20">
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden p-6 sm:p-8 border-b-2" style={{ borderColor: 'var(--accent-cyan)' }}>
-        <span
-          className="sticker absolute top-4 right-4"
-          style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan)', boxShadow: '3px 3px 0 var(--accent-cyan)' }}
-        >
-          CLIENT HUB
-        </span>
+      <section data-archetype="eagle" className="relative overflow-hidden p-6 sm:p-8 border-b-2" style={{ borderColor: 'var(--accent-cyan)' }}>
+        <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <span className="arch-badge arch-badge-eagle">Eagle Discovery</span>
+          <span
+            className="sticker"
+            style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan)', boxShadow: '3px 3px 0 var(--accent-cyan)' }}
+          >
+            CLIENT HUB
+          </span>
+        </div>
         <h1
           className="font-display hero-slam"
           style={{ fontSize: 'clamp(2.5rem, 10vw, 6rem)', color: 'var(--accent-cyan)' }}
@@ -206,6 +198,7 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
                     {products.flexiShield.name}
                   </h3>
                   <span className="tag tag-yellow">HMO ENHANCER</span>
+                  <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver Pick</span>
                 </div>
                 <p className="font-mono mb-3" style={{ color: 'var(--text-muted)', fontSize: '0.65rem' }}>
                   {products.flexiShield.description}
@@ -219,6 +212,9 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
                     <div>
                       <div className="font-display" style={{ fontSize: '1.5rem', color: 'var(--bg)' }}>₱6,510</div>
                       <div className="font-mono" style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.7)' }}>Starting / Year</div>
+                      <div className="arch-price-beaver-daily">
+                        <span className="arch-price-beaver-daily-unit">₱18</span>/day
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -243,6 +239,7 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
                     {products.blueRoyale.name}
                   </h3>
                   <span className="tag" style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}>WORLDWIDE</span>
+                  <span className="arch-badge arch-badge-eagle arch-badge-sm">Eagle Premium</span>
                 </div>
                 <p className="font-mono mb-3" style={{ color: 'var(--text-muted)', fontSize: '0.65rem' }}>
                   {products.blueRoyale.description}
@@ -256,6 +253,10 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
                     <div>
                       <div className="font-display" style={{ fontSize: '1.5rem', color: '#00d4ff' }}>$1,676</div>
                       <div className="font-mono" style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.7)' }}>Starting / Year</div>
+                      <div className="price-daily">
+                        <span className="price-daily-amount">$5</span>
+                        <span className="price-daily-label">/day</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -270,9 +271,12 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
         </div>
       </section>
 
-      {/* ===== SOCIAL PROOF ===== */}
-      <section className="reveal-section">
-        <h2 className="section-title">THE REALITY</h2>
+      {/* ===== SOCIAL PROOF / THE REALITY ===== */}
+      <section data-archetype="owl" className="reveal-section">
+        <div className="flex items-center gap-2 mb-1">
+          <h2 className="section-title" style={{ marginBottom: 0 }}>THE REALITY</h2>
+          <span className="arch-badge arch-badge-owl arch-badge-sm">Owl Verified</span>
+        </div>
         <p className="section-subtitle mt-1">Why Filipinos need insurance now</p>
 
         <div className="grid grid-cols-2 gap-3 mt-4">
@@ -310,47 +314,45 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
       </section>
 
       {/* ===== CHOOSE YOUR ARMOR COMPARISON ===== */}
-      <section className="reveal-section">
+      <section data-archetype="beaver" className="reveal-section">
         <h2 className="section-title">CHOOSE YOUR ARMOR</h2>
         <p className="section-subtitle mt-1">Side-by-side comparison</p>
 
-        <div className="grid gap-0 mt-4 card-comic-lg" style={{ border: '2px solid var(--border)' }}>
-          {/* Headers */}
-          <div className="grid grid-cols-3" style={{ borderBottom: '2px solid var(--border)' }}>
-            <div className="p-3 font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-dim)' }}>FEATURE</div>
-            <div className="p-3 text-center" style={{ background: 'rgba(245, 196, 0, 0.1)', borderLeft: '1px solid var(--border)' }}>
-              <FlexiShieldBadge size="sm" />
-            </div>
-            <div className="p-3 text-center" style={{ background: 'rgba(10, 22, 40, 0.4)', borderLeft: '1px solid var(--border)' }}>
-              <BlueRoyaleBadge size="sm" />
-            </div>
-          </div>
-          {/* Rows */}
-          {[
-            ['Max Coverage', 'PHP 2M', 'USD 2M'],
-            ['Starting Price', '₱6,510/yr', '$1,676/yr'],
-            ['Coverage Area', 'Philippines', 'Worldwide'],
-            ['Age Range', '0-70 years', '0-100 years'],
-            ['Hospital Income', '₱1,000/day', 'N/A'],
-            ['Maternity', 'No', 'Plans B & C'],
-            ['Dental', 'No', 'Plans B & C'],
-            ['Vision', 'No', 'Plans B & C'],
-            ['Enhances HMO', 'Yes', 'N/A'],
-          ].map(([feature, flexi, blue], i) => (
-            <div
-              key={i}
-              className="grid grid-cols-3"
-              style={{ borderBottom: '1px solid var(--border)', background: i % 2 === 0 ? 'var(--bg-panel)' : 'transparent' }}
-            >
-              <div className="p-2.5 font-mono" style={{ fontSize: '0.6rem', color: 'var(--text)' }}>{feature}</div>
-              <div className="p-2.5 text-center font-mono" style={{ fontSize: '0.6rem', color: 'var(--accent-yellow)', borderLeft: '1px solid var(--border)' }}>
-                {flexi}
-              </div>
-              <div className="p-2.5 text-center font-mono" style={{ fontSize: '0.6rem', color: 'var(--accent-cyan)', borderLeft: '1px solid var(--border)' }}>
-                {blue}
-              </div>
-            </div>
-          ))}
+        <div className="mt-4 card-comic-lg" style={{ border: '2px solid var(--border)' }}>
+          <table className="arch-comparison-table">
+            <thead>
+              <tr>
+                <th>FEATURE</th>
+                <th>
+                  <FlexiShieldBadge size="sm" />
+                  <span className="arch-badge arch-badge-beaver arch-badge-sm" style={{ marginTop: '0.25rem' }}>Beaver Pick</span>
+                </th>
+                <th>
+                  <BlueRoyaleBadge size="sm" />
+                  <span className="arch-badge arch-badge-eagle arch-badge-sm" style={{ marginTop: '0.25rem' }}>Eagle Premium</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Max Coverage', 'PHP 2M', 'USD 2M'],
+                ['Starting Price', '₱6,510/yr', '$1,676/yr'],
+                ['Coverage Area', 'Philippines', 'Worldwide'],
+                ['Age Range', '0-70 years', '0-100 years'],
+                ['Hospital Income', '₱1,000/day', 'N/A'],
+                ['Maternity', 'No', 'Plans B & C'],
+                ['Dental', 'No', 'Plans B & C'],
+                ['Vision', 'No', 'Plans B & C'],
+                ['Enhances HMO', 'Yes', 'N/A'],
+              ].map(([feature, flexi, blue], i) => (
+                <tr key={i} style={{ background: i % 2 === 0 ? 'var(--bg-panel)' : 'transparent' }}>
+                  <td>{feature}</td>
+                  <td style={{ color: 'var(--accent-yellow)' }}>{flexi}</td>
+                  <td style={{ color: 'var(--accent-cyan)' }}>{blue}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -364,8 +366,11 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
       </section>
 
       {/* ===== SOCIAL PROOF / TESTIMONIALS ===== */}
-      <section className="reveal-section">
-        <h2 className="section-title">WHAT PEOPLE SAY</h2>
+      <section data-archetype="ant" className="reveal-section">
+        <div className="flex items-center gap-2 mb-1">
+          <h2 className="section-title" style={{ marginBottom: 0 }}>WHAT PEOPLE SAY</h2>
+          <span className="arch-badge arch-badge-ant arch-badge-sm">Ant Verified</span>
+        </div>
         <p className="section-subtitle mt-1">Real talk from real people</p>
 
         <div className="space-y-3 mt-4">
@@ -374,7 +379,7 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
             { quote: 'Blue Royale saved us $45,000 in emergency hospital bills while working in Dubai.', person: 'Rico, OFW', tag: 'OFW Feature' },
             { quote: 'FlexiShield costs less than my monthly Netflix subscription. No brainer.', person: 'Jen, 28', tag: 'Smart Pinoy' },
           ].map((item, i) => (
-            <div key={i} className="hover-card p-4 stagger-child card-comic">
+            <div key={i} className="hover-card p-4 stagger-child card-comic arch-card-ant-social-proof">
               <div className="flex items-center gap-2 mb-2">
                 <span className="tag" style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}>{item.tag}</span>
               </div>
@@ -404,9 +409,12 @@ export function ClientModeLayout({ onNavigate }: ClientModeLayoutProps) {
           className="p-6 sm:p-8 text-center border-t-2 card-comic-lg"
           style={{ borderColor: 'var(--accent-cyan)', background: 'var(--bg-panel)' }}
         >
-          <span className="sticker mb-4 inline-block" style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan)', boxShadow: '3px 3px 0 var(--accent-cyan)' }}>
-            MAKE YOUR MOVE
-          </span>
+          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
+            <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver Move</span>
+            <span className="sticker" style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan)', boxShadow: '3px 3px 0 var(--accent-cyan)' }}>
+              MAKE YOUR MOVE
+            </span>
+          </div>
           <h2
             className="font-display mt-2"
             style={{ fontSize: 'clamp(1.8rem, 6vw, 3rem)', color: 'var(--accent-cyan)' }}

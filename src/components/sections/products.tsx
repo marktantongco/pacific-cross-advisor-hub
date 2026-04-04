@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   blueRoyalePlans,
   flexiShieldTiers,
@@ -14,31 +14,30 @@ import {
 } from '@/lib/data';
 import { ProductRadarChart } from '@/components/charts/insurance-charts';
 import { QuizFlow } from '@/components/interactive/quiz-flow';
+import { PremiumCalculator } from '@/components/PremiumCalculator';
+import { useGsapScrollReveal, useGsapMagneticAll, useGsapContext, gsap } from '@/lib/gsap-engine';
 
 type SubView = 'overview' | 'blueroyale' | 'flexishield' | 'compare' | 'calculator' | 'quiz';
 type BRPlan = 'planA' | 'planB' | 'planC';
 
 // ============================================================
-// INTERSECTION OBSERVER HOOK
+// GSAP HOOKS — replaces IntersectionObserver useReveal
 // ============================================================
-function useReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
+function useGsapProductsSection() {
+  useGsapScrollReveal();
+  useGsapMagneticAll();
 
-    const sections = document.querySelectorAll('.reveal-section');
-    sections.forEach((s) => observer.observe(s));
-
-    return () => observer.disconnect();
-  }, []);
+  // GSAP: .ant-scale hover for product tier cards
+  useGsapContext(() => {
+    gsap.utils.toArray<HTMLElement>('.ant-scale-trigger').forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { scale: 1.02, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { scale: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+      });
+    });
+  });
 }
 
 // ============================================================
@@ -102,7 +101,7 @@ function AccordionItem({
 export function ProductsSection() {
   const [subView, setSubView] = useState<SubView>('overview');
 
-  useReveal();
+  useGsapProductsSection();
 
   const subNavItems: { id: SubView; label: string; emoji: string }[] = [
     { id: 'overview', label: 'OVERVIEW', emoji: '\uD83D\uDCCB' },
@@ -182,6 +181,53 @@ export function ProductsSection() {
 }
 
 // ============================================================
+// QUICK QUOTE INLINE (compact toggle in overview)
+// ============================================================
+function QuickQuoteInline() {
+  const [showCalc, setShowCalc] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setShowCalc(!showCalc)}
+        className="btn-cta"
+        style={{
+          width: '100%',
+          background: '#f59e0b',
+          borderColor: '#f59e0b',
+          color: '#000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.5rem',
+          padding: '0.6rem 0.75rem',
+          borderRadius: 0,
+          fontSize: '0.7rem',
+          fontWeight: 700,
+          letterSpacing: '0.06em',
+          transition: 'all 0.2s ease',
+        }}
+      >
+        <span>{'\uD83E\uDDEE'}</span>
+        <span>{showCalc ? 'HIDE QUICK QUOTE' : 'QUICK QUOTE'}</span>
+        <span className="arch-badge arch-badge-beaver arch-badge-sm">Beaver</span>
+      </button>
+      <div
+        style={{
+          maxHeight: showCalc ? '2000px' : '0',
+          overflow: 'hidden',
+          opacity: showCalc ? 1 : 0,
+          transition: 'max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',
+          marginTop: showCalc ? '0.75rem' : '0',
+        }}
+      >
+        <PremiumCalculator compact />
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
 // OVERVIEW
 // ============================================================
 function OverviewSection({ onNavigate }: { onNavigate: (v: SubView) => void }) {
@@ -190,7 +236,7 @@ function OverviewSection({ onNavigate }: { onNavigate: (v: SubView) => void }) {
       {/* Blue Royale quick card — Eagle archetype */}
       <div data-archetype="eagle" className="reveal-section stagger-child" style={{ marginBottom: '0.75rem' }}>
         <div
-          className="hover-card"
+          className="hover-card ant-scale-trigger"
           style={{ cursor: 'pointer', borderLeft: '4px solid var(--accent-yellow)' }}
           onClick={() => onNavigate('blueroyale')}
         >
@@ -229,7 +275,7 @@ function OverviewSection({ onNavigate }: { onNavigate: (v: SubView) => void }) {
       {/* FlexiShield quick card — Beaver archetype */}
       <div data-archetype="beaver" className="reveal-section stagger-child" style={{ marginBottom: '0.75rem' }}>
         <div
-          className="hover-card"
+          className="hover-card ant-scale-trigger"
           style={{ cursor: 'pointer', borderLeft: '4px solid var(--accent-red)' }}
           onClick={() => onNavigate('flexishield')}
         >
@@ -263,6 +309,11 @@ function OverviewSection({ onNavigate }: { onNavigate: (v: SubView) => void }) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Quick Quote Toggle — Compact Beaver Calculator */}
+      <div className="reveal-section stagger-child" style={{ marginBottom: '0.75rem' }}>
+        <QuickQuoteInline />
       </div>
 
       {/* Radar chart */}
@@ -1040,7 +1091,7 @@ function CompareSection() {
           {comparisonData.map((row, i) => (
             <div
               key={i}
-              className="font-mono"
+              className="font-mono stagger-child"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '2fr 1fr 1fr',
