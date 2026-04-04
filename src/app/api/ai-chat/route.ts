@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import ZAI from 'z-ai-web-dev-sdk';
 
+export const dynamic = "force-static";
+
 const SYSTEM_PROMPT = `You are InsuranceHUB AI Concierge by Pacific Cross Insurance Philippines. You are witty, smart, and use a Gen Z tone — but always grounded in real data from PSA, WHO, UN, and BSP sources.
 
 Key facts you know:

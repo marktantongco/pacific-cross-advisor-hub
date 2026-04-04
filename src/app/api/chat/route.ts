@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import ZAI from 'z-ai-web-dev-sdk';
 
+export const dynamic = "force-static";
+
 const PRODUCT_KNOWLEDGE = `
 You are the Pacific Cross Insurance Concierge — a knowledgeable, helpful assistant for Pacific Cross insurance products in the Philippines.
 
