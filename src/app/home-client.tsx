@@ -8,6 +8,7 @@ import {
   useGsapModeTransition, useGsapCounter,
 } from '@/lib/gsap-engine';
 import { HomeSection } from '@/components/sections/home';
+import { AdvisorCommandCenter } from '@/components/sections/advisor-command-center';
 import { ProductsSection } from '@/components/sections/products';
 import { AdvisorPlaybookSection } from '@/components/sections/advisor-playbook';
 import { SocialMediaSection } from '@/components/sections/social-media';
@@ -27,6 +28,7 @@ import { stats } from '@/lib/data';
 
 const NAV_ITEMS: { id: TabId; label: string; icon: string; grid: string }[] = [
   { id: 'home', label: 'Command Center', icon: '⚡', grid: 'HOME BASE' },
+  { id: 'command', label: 'Advisor Tools', icon: '🦅', grid: 'EAGLE HUB' },
   { id: 'products', label: 'FlexiShield', icon: '🛡️', grid: 'HMO HERO' },
   { id: 'products', label: 'Blue Royale', icon: '👑', grid: 'LEGACY BOSS' },
   { id: 'playbook', label: 'Advisor Playbook', icon: '🗣️', grid: 'SPIEL FLOW' },
@@ -39,9 +41,9 @@ const NAV_ITEMS: { id: TabId; label: string; icon: string; grid: string }[] = [
 
 const MOBILE_TABS: { id: TabId; label: string; icon: string }[] = [
   { id: 'home', label: 'Home', icon: '⚡' },
+  { id: 'command', label: 'Tools', icon: '🦅' },
   { id: 'products', label: 'Products', icon: '💎' },
   { id: 'playbook', label: 'Playbook', icon: '🗣️' },
-  { id: 'social', label: 'Social', icon: '📱' },
   { id: 'client', label: 'Client', icon: '🤝' },
 ];
 
@@ -169,6 +171,7 @@ export default function HomeClient() {
   const renderSection = () => {
     switch (activeTab) {
       case 'home': return <HomeSection onNavigate={handleTabChange} />;
+      case 'command': return <AdvisorCommandCenter />;
       case 'products': return <ProductsSection />;
       case 'playbook': return <AdvisorPlaybookSection />;
       case 'social': return <SocialMediaSection />;

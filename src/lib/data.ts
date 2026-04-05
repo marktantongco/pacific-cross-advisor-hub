@@ -4,6 +4,7 @@
 
 export const TABS = [
   { id: 'home', label: 'HOME', icon: '🏠' },
+  { id: 'command', label: 'COMMAND', icon: '🦅' },
   { id: 'products', label: 'PRODUCTS', icon: '💎' },
   { id: 'playbook', label: 'PLAYBOOK', icon: '🗣️' },
   { id: 'social', label: 'SOCIAL', icon: '📱' },

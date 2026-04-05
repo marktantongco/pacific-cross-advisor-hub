@@ -1049,6 +1049,51 @@ input[type="range"]::-moz-range-thumb {
   .load-wipe { display: none; }
   .reveal-section { opacity: 1; transform: none; }
   .marquee-track { animation: none; }
+  .gsap-reveal { opacity: 1 !important; transform: none !important; }
+  .command-tool-card { opacity: 1 !important; transform: none !important; }
+}
+
+/* ============================================================
+   GSAP ANIMATION UTILITIES
+   ============================================================ */
+
+.gsap-reveal {
+  opacity: 0;
+}
+
+.tool-card,
+.command-tool-card {
+  transition: none; /* GSAP handles all motion */
+}
+
+/* Lead form modal animations */
+.lead-modal-overlay {
+  animation: lead-fade-in 0.25s ease-out;
+}
+
+.lead-modal-panel {
+  animation: lead-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes lead-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes lead-slide-up {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Success checkmark pulse */
+.lead-success-check {
+  animation: success-pulse 0.5s ease-out;
+}
+
+@keyframes success-pulse {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* ============================================================
