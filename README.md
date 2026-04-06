@@ -117,10 +117,6 @@ cd pacific-cross-advisor-hub
 # Install dependencies (using Bun)
 bun install
 
-# Set up the database
-bun run db:push
-bun run db:seed
-
 # Start development server
 bun run dev
 ```
@@ -132,14 +128,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 Create a `.env` file in the root directory:
 
 ```env
-# Database (SQLite - default)
-DATABASE_URL="file:./dev.db"
-
-# Optional: Analytics
-NEXT_PUBLIC_ANALYTICS_ID="your-analytics-id"
-
-# Optional: Vercel deployment
-AI_GATEWAY_API_KEY="your-vercel-api-key"
+# Optional: Vercel AI Gateway
+AI_GATEWAY_API_KEY="your-vercel-ai-gateway-api-key"
 ```
 
 ---
@@ -159,11 +149,12 @@ pacific-cross-advisor-hub/
 │   ├── 📁 components/          # React Components
 │   │   └── 📁 ui/             # shadcn/ui Components
 │   ├── 📁 hooks/              # Custom Hooks
-│   └── 📁 lib/                # Utilities
+│   └── 📁 lib/                # Utilities & Data
 ├── 📁 prisma/                  # Database Schema
 ├── 📁 public/                  # Static Assets
 │   ├── 📁 download/           # PDF/PPTX Files
 │   └── 📄 manifest.json       # PWA Manifest
+├── 📁 .github/workflows/       # GitHub Actions
 ├── 📄 package.json            # Dependencies
 ├── 📄 next.config.ts          # Next.js Config
 ├── 📄 tailwind.config.ts      # Tailwind Config
@@ -178,8 +169,6 @@ pacific-cross-advisor-hub/
 | **Language** | TypeScript 5 |
 | **Styling** | Tailwind CSS 4 |
 | **UI Components** | shadcn/ui |
-| **Database** | Prisma ORM + SQLite |
-| **State** | Zustand + TanStack Query |
 | **Animations** | Framer Motion |
 | **Icons** | Lucide React |
 | **Deployment** | Vercel / GitHub Pages |
@@ -193,11 +182,6 @@ bun run dev          # Start dev server on port 3000
 # Build
 bun run build        # Production build for Vercel
 bun run build:pages  # Static build for GitHub Pages
-
-# Database
-bun run db:push      # Push schema changes
-bun run db:seed      # Seed initial data
-bun run db:migrate   # Run migrations
 
 # Quality
 bun run lint         # Run ESLint
@@ -227,14 +211,6 @@ This app features a **brutalist design** with:
 | **Muted** | `#f4f4f5` | Cards, sections |
 | **Destructive** | `#ef4444` | Errors, warnings |
 
-### CSS Classes
-
-```css
-.brutal-card     /* Sharp bordered card */
-.brutal-btn      /* Bold button style */
-.brutal-btn-accent /* Accent colored button */
-```
-
 ---
 
 ## 🚢 Deployment
@@ -243,30 +219,35 @@ This app features a **brutalist design** with:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/marktantongco/pacific-cross-advisor-hub)
 
-1. Fork this repository
-2. Click the deploy button above
-3. Connect your GitHub account
-4. Add environment variables
-5. Deploy!
+1. Click the button above
+2. Connect your GitHub account
+3. Configure project settings
+4. Deploy!
 
 ### GitHub Pages
+
+The app automatically deploys to GitHub Pages when you push to the `main` branch.
+
+1. **Enable GitHub Pages**
+   - Go to repository Settings → Pages
+   - Source: GitHub Actions
+
+2. **Push to main branch**
+   ```bash
+   git push origin main
+   ```
+
+3. **Wait for deployment**
+   - Check Actions tab for progress
+   - Site will be live at `https://marktantongco.github.io/pacific-cross-advisor-hub`
+
+### Manual Build
 
 ```bash
 # Build for GitHub Pages
 bun run build:pages
 
 # Output in ./out directory
-# Deploy to GitHub Pages via Actions
-```
-
-### Manual Deployment
-
-```bash
-# Build the application
-bun run build
-
-# Start production server
-bun run start
 ```
 
 ---
@@ -277,7 +258,7 @@ bun run start
 
 | Metric | Value | Year |
 |--------|-------|------|
-| Insurance Penetration | **1.78%** | 2023 |
+| Insurance Penetration | **1.78%** | 2025 |
 | Population | **117M** | 2024 |
 | Middle Class | **12M+** | Growing |
 | OFWs | **10M+** | Global |
@@ -289,6 +270,70 @@ bun run start
 2. **OFW Families** - Remittance protection
 3. **Young Professionals** - Digital-first generation
 4. **Small Business Owners** - Business continuity
+
+---
+
+## 🔧 API Reference
+
+### Products API
+```
+GET /api/products
+Returns: Array of product objects
+```
+
+### FAQs API
+```
+GET /api/faqs
+Returns: Array of FAQ objects
+```
+
+### Spiels API
+```
+GET /api/spiels
+Returns: Array of spiel/conversation script objects
+```
+
+### Stats API
+```
+GET /api/stats
+Returns: Array of market statistics
+```
+
+### Roadmap API
+```
+GET /api/roadmap
+Returns: Array of roadmap items
+
+PATCH /api/roadmap
+Body: { id: string, isCompleted: boolean }
+```
+
+### Events API
+```
+GET /api/events
+Returns: Array of calendar events
+```
+
+### Misconceptions API
+```
+GET /api/misconceptions
+Returns: Array of myth/reality objects
+```
+
+### Slides API
+```
+GET /api/slides
+Returns: Array of presentation slides
+```
+
+### Social API
+```
+GET /api/social
+Returns: Array of social posts
+
+POST /api/social
+Body: { content, platform, hashtags, scheduledAt }
+```
 
 ---
 
