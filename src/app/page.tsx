@@ -10,6 +10,16 @@ import {
   ChevronDown, ChevronUp, Share2, Facebook, Instagram,
   Linkedin, Twitter, ArrowRight, Eye, EyeOff, Sparkles
 } from 'lucide-react'
+import { 
+  products as staticProducts, 
+  faqs as staticFaqs, 
+  spiels as staticSpiels, 
+  stats as staticStats, 
+  roadmap as staticRoadmap, 
+  misconceptions as staticMisconceptions, 
+  slides as staticSlides, 
+  events as staticEvents 
+} from '@/lib/data'
 
 // Types
 interface Product {
@@ -101,79 +111,25 @@ const tabs = [
 export default function PacificCrossHub() {
   const [activeTab, setActiveTab] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [products, setProducts] = useState<Product[]>([])
-  const [faqs, setFaqs] = useState<FAQ[]>([])
-  const [spiels, setSpiels] = useState<SpielStep[]>([])
-  const [stats, setStats] = useState<MarketStat[]>([])
-  const [roadmap, setRoadmap] = useState<RoadmapItem[]>([])
-  const [misconceptions, setMisconceptions] = useState<Misconception[]>([])
-  const [slides, setSlides] = useState<PresentationSlide[]>([])
-  const [events, setEvents] = useState<CalendarEvent[]>([])
-  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState<Product[]>(staticProducts)
+  const [faqs, setFaqs] = useState<FAQ[]>(staticFaqs)
+  const [spiels, setSpiels] = useState<SpielStep[]>(staticSpiels)
+  const [stats, setStats] = useState<MarketStat[]>(staticStats)
+  const [roadmap, setRoadmap] = useState<RoadmapItem[]>(staticRoadmap)
+  const [misconceptions, setMisconceptions] = useState<Misconception[]>(staticMisconceptions)
+  const [slides, setSlides] = useState<PresentationSlide[]>(staticSlides)
+  const [events, setEvents] = useState<CalendarEvent[]>(staticEvents)
+  const [loading, setLoading] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null)
   const [expandedSpiel, setExpandedSpiel] = useState<string | null>(null)
-  const [activeProduct, setActiveProduct] = useState<string | null>(null)
+  const [activeProduct, setActiveProduct] = useState<string | null>(staticProducts[0]?.slug || null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [copiedScript, setCopiedScript] = useState<string | null>(null)
 
-  // Fetch all data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [productsRes, faqsRes, spielsRes, statsRes, roadmapRes, misconceptionsRes, slidesRes, eventsRes] = await Promise.all([
-          fetch('/api/products'),
-          fetch('/api/faqs'),
-          fetch('/api/spiels'),
-          fetch('/api/stats'),
-          fetch('/api/roadmap'),
-          fetch('/api/misconceptions'),
-          fetch('/api/slides'),
-          fetch('/api/events'),
-        ])
-        
-        const productsData = await productsRes.json()
-        const faqsData = await faqsRes.json()
-        const spielsData = await spielsRes.json()
-        const statsData = await statsRes.json()
-        const roadmapData = await roadmapRes.json()
-        const misconceptionsData = await misconceptionsRes.json()
-        const slidesData = await slidesRes.json()
-        const eventsData = await eventsRes.json()
-        
-        setProducts(productsData)
-        setFaqs(faqsData)
-        setSpiels(spielsData)
-        setStats(statsData)
-        setRoadmap(roadmapData)
-        setMisconceptions(misconceptionsData)
-        setSlides(slidesData)
-        setEvents(eventsData)
-        if (productsData.length > 0) {
-          setActiveProduct(productsData[0].slug)
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-    fetchData()
-  }, [])
-
   const toggleRoadmapItem = async (id: string, isCompleted: boolean) => {
-    try {
-      await fetch('/api/roadmap', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, isCompleted: !isCompleted })
-      })
-      setRoadmap(roadmap.map(item => 
-        item.id === id ? { ...item, isCompleted: !isCompleted } : item
-      ))
-    } catch (error) {
-      console.error('Error updating roadmap:', error)
-    }
+    setRoadmap(roadmap.map(item => 
+      item.id === id ? { ...item, isCompleted: !isCompleted } : item
+    ))
   }
 
   const copyToClipboard = async (text: string, id: string) => {

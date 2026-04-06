@@ -34,6 +34,10 @@ jobs:
         env:
           GITHUB_PAGES: true
           NEXT_PUBLIC_BASE_PATH: /pacific-cross-advisor-hub
+          NODE_ENV: production
+
+      - name: Add .nojekyll
+        run: touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
